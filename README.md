@@ -53,15 +53,15 @@ python-dep-manager-companion-mcp-server/
 
 ## 🛠️ Development
 
-**Transport Support:** Stdio (default) and HTTP modes following MCP standards.
+**Transport Support**: Stdio (default) and HTTP modes following MCP standards.
 
-**Environment Variables:**
+**Environment Variables**:
 
 - `TRANSPORT_MODE`: `stdio` or `http` (default: `stdio`)
 - `TRANSPORT_PORT`: HTTP server port (default: `8080`)
 - `TRANSPORT_HOST`: Host binding (default: `127.0.0.1`)
 
-**Local Development:**
+**Local Development**:
 
 ```shell
 # Clone and setup
@@ -73,7 +73,7 @@ uv sync
 uv run python src/server.py stdio
 ```
 
-**Roadmap:** Adding support for pipenv, pdm, pixi, and additional Python package managers.
+**Roadmap**: Adding support for pipenv, pdm, pixi, and additional Python package managers.
 
 ## 📄 License
 

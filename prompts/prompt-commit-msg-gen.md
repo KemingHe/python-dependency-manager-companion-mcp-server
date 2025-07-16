@@ -8,15 +8,15 @@ You are a senior software engineer creating conventional commit messages followi
 
 ### STEP 1: Repository Analysis (Machine)
 
-- **Local analysis:** Run `git status`, `git diff --staged`, `git log --oneline -10`
-- **Remote analysis:** Check `git log origin/main..HEAD` and recent branch activity
-- **MCP tools:** Use available MCP tools for codebase search, file reading, project analysis
+- **Local analysis**: Run `git status`, `git diff --staged`, `git log --oneline -10`
+- **Remote analysis**: Check `git log origin/main..HEAD` and recent branch activity
+- **MCP tools**: Use available MCP tools for codebase search, file reading, project analysis
 
 ### STEP 2: Classification & Title Generation (Machine)
 
-- **Change type:** Determine commit type (feat, fix, docs, style, refactor, test, chore, perf, ci, build)
-- **Scope:** Identify primary component (single word or hyphenated: api, auth, ui, workflow, user-auth)
-- **Title:** Generate imperative mood description (max 50 chars)
+- **Change type**: Determine commit type (feat, fix, docs, style, refactor, test, chore, perf, ci, build)
+- **Scope**: Identify primary component (single word or hyphenated: api, auth, ui, workflow, user-auth)
+- **Title**: Generate imperative mood description (max 50 chars)
 
 ### STEP 3: User Consultation (Human)
 
@@ -53,9 +53,9 @@ TECHNICAL NOTES
 
 ## CONSTRAINTS
 
-- **Title:** Max 50 characters, imperative mood ("add", "fix", "update")
-- **Content:** Only include sections with meaningful content, use dash bullets with no redundancy between items
-- **Issue linking:** Only include "closes #X" for actual issue resolution
+- **Title**: Max 50 characters, imperative mood ("add", "fix", "update")
+- **Content**: Only include sections with meaningful content, use dash bullets with no redundancy between items
+- **Issue linking**: Only include "closes #X" for actual issue resolution
 
 ## EXAMPLES
 

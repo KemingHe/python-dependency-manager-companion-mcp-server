@@ -16,15 +16,15 @@ graph TD
     ORCHESTRATOR --> UPDATE_DOCS
 ```
 
-**Security:** Pinned action hashes, signed commits, sequential execution
+**Security**: Pinned action hashes, signed commits, sequential execution
 
 ## 🚀 Planned Extensions
 
-- **Workflows:** `auto-update-index.yml` (Tantivy), `auto-build-and-deploy.yml` (Docker)
-- **Managers:** pipenv, pdm, pixi
-- **Features:** Conditional updates, performance monitoring
+- **Workflows**: `auto-update-index.yml` (Tantivy), `auto-build-and-deploy.yml` (Docker)
+- **Managers**: pipenv, pdm, pixi
+- **Features**: Conditional updates, performance monitoring
 
 ## 🔧 Operations
 
-- **Testing:** `workflow_dispatch` on both workflows  
-- **Monitoring:** Check Tuesday runs for upstream changes
+- **Testing**: `workflow_dispatch` on both workflows  
+- **Monitoring**: Check Tuesday runs for upstream changes

@@ -8,8 +8,8 @@ labels: 'bug, help wanted'
 
 ### 🐛 What happened?
 
-**Expected:** [What should happen]
-**Actual:** [What actually happened]
+**Expected**: [What should happen]
+**Actual**: [What actually happened]
 
 ### 🔄 Steps to Reproduce
 
