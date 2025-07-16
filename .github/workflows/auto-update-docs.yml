@@ -61,6 +61,9 @@ jobs:
           echo "updated_at: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ${{ matrix.target_dir }}/_metadata.yml
           echo "commit_sha: $(cd temp-docs && git rev-parse HEAD)" >> ${{ matrix.target_dir }}/_metadata.yml
           
+      - name: Clean non-documentation files
+        run: ./scripts/clean-assets.sh
+
       - name: Pull latest changes by previous update-docs job
         run: git pull origin main
           
