@@ -1,3 +1,0 @@
-cross-platform compatible,``conda export --from-history>ENV.yml``
-platform + package specific,``conda export ENVNAME>ENV.yml``
-platform + package + channel specific,``conda list --explicit>ENV.txt``
