@@ -6,7 +6,7 @@ Local MCP server providing unified search across Python dependency manager docum
 
 ## 📋 Overview
 
-Unified search for pip, poetry, uv, and conda docs via Docker with weekly auto-updates. Built with FastMCP and Tantivy.
+Unified search for pip, poetry, uv, and conda docs via Docker with automated weekly updates. Built with FastMCP and Tantivy for simple, AI-less full-text search.
 
 ## 🚀 Getting Started
 
@@ -41,33 +41,27 @@ Query latest and unified documentation across all supported Python dependency ma
 
 ```plaintext
 python-dep-manager-companion-mcp-server/
-├── .github/workflows/
-│   ├── auto-update.yml       # Orchestrator: Tuesday 6pm ET
-│   └── auto-update-docs.yml  # Modular: Doc fetching workflow
+├── .github/workflows/        # Automation workflows (see workflows/README.md)
 ├── docs/                     # Project documentation
 ├── src/
 │   ├── server.py             # FastMCP server implementation
 │   ├── index.py              # Tantivy search engine
-│   └── assets/               # Local documentation files
-│       ├── pip/              # Pip documentation .md files
-│       ├── poetry/           # Poetry documentation .md files  
-│       ├── uv/               # UV documentation .md files
-│       └── conda/            # Conda documentation .md files
+│   └── assets/               # Auto-updated documentation files
 ├── Dockerfile                # Container build configuration
 └── pyproject.toml            # Project dependencies and metadata
 ```
 
 ## 🛠️ Development
 
-**Transport Support**: Stdio (default) and HTTP modes following MCP standards.
+**Transport Support:** Stdio (default) and HTTP modes following MCP standards.
 
-**Environment Variables**:
+**Environment Variables:**
 
 - `TRANSPORT_MODE`: `stdio` or `http` (default: `stdio`)
 - `TRANSPORT_PORT`: HTTP server port (default: `8080`)
 - `TRANSPORT_HOST`: Host binding (default: `127.0.0.1`)
 
-**Local Development**:
+**Local Development:**
 
 ```shell
 # Clone and setup
@@ -79,7 +73,7 @@ uv sync
 uv run python src/server.py stdio
 ```
 
-**Roadmap**: Adding support for pipenv, pdm, pixi, and additional Python package managers.
+**Roadmap:** Adding support for pipenv, pdm, pixi, and additional Python package managers.
 
 ## 📄 License
 
@@ -87,4 +81,4 @@ This project is licensed under the [MIT License](./LICENSE) - a permissive licen
 
 ## 📞 Support
 
-Open GitHub issues for bug reports and feature requests. Weekly documentation updates run automatically every Tuesday at 6pm ET with signed commits by `github-actions[bot]`.
+Open GitHub issues for bug reports and feature requests. Documentation is automatically updated weekly via workflows (see [.github/workflows/README.md](.github/workflows/README.md)).
