@@ -1,7 +1,7 @@
 name: Update Documentation
 
 on:
-  workflow_call:
+  workflow_call: {}
   workflow_dispatch: {} # Manual trigger for testing
 
 concurrency:
@@ -52,8 +52,8 @@ jobs:
           # Create target directory if not exist
           mkdir -p ${{ matrix.target_dir }}
           
-          # Copy docs and preserve structure
-          cp -r temp-docs/${{ matrix.docs_path }}/* ${{ matrix.target_dir }}/
+          # Copy docs and preserve structure with metadata
+          cp -a temp-docs/${{ matrix.docs_path }}/* ${{ matrix.target_dir }}/
           
           # Add metadata file with source info
           echo "source_repo: ${{ matrix.repo }}" > ${{ matrix.target_dir }}/_metadata.yml
