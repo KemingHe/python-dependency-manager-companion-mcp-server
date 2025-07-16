@@ -1,0 +1,72 @@
+name: Update Documentation
+
+on:
+  workflow_call: {}
+  workflow_dispatch: {} # Manual trigger for testing
+
+concurrency:
+  group: update-docs
+  cancel-in-progress: true
+
+jobs:
+  update-docs:
+    name: Update ${{ matrix.manager }} docs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    strategy:
+      max-parallel: 1  # Prevent commit conflicts
+      matrix:
+        include:
+          - manager: pip
+            repo: pypa/pip
+            docs_path: docs
+            target_dir: src/assets/pip
+          - manager: poetry
+            repo: python-poetry/poetry
+            docs_path: docs
+            target_dir: src/assets/poetry
+          - manager: uv
+            repo: astral-sh/uv
+            docs_path: docs
+            target_dir: src/assets/uv
+          - manager: conda
+            repo: conda/conda
+            docs_path: docs
+            target_dir: src/assets/conda
+    
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+          
+      - name: Checkout ${{ matrix.manager }} docs
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repo }}
+          sparse-checkout: |
+            ${{ matrix.docs_path }}
+          path: temp-docs
+          
+      - name: Copy documentation files
+        run: |
+          # Create target directory if not exist
+          mkdir -p ${{ matrix.target_dir }}
+          
+          # Copy docs and preserve structure with metadata
+          cp -a temp-docs/${{ matrix.docs_path }}/* ${{ matrix.target_dir }}/
+          
+          # Add metadata file with source info
+          echo "source_repo: ${{ matrix.repo }}" > ${{ matrix.target_dir }}/_metadata.yml
+          echo "docs_path: ${{ matrix.docs_path }}" >> ${{ matrix.target_dir }}/_metadata.yml
+          echo "updated_at: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ${{ matrix.target_dir }}/_metadata.yml
+          echo "commit_sha: $(cd temp-docs && git rev-parse HEAD)" >> ${{ matrix.target_dir }}/_metadata.yml
+          
+      - name: Auto commit changes to main
+        # Pin 3rd-party action to v6.0.1 commit hash released on 2025-06-11 to prevent supply chain attacks
+        uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0
+        with:
+          commit_message: 'docs(src/assets/): update ${{ matrix.manager }} official documentation'
+          commit_options: '--signoff'
+          file_pattern: 'src/assets/${{ matrix.manager }}/*'
+          disable_globbing: true
+          status_options: '--untracked-files=no'
