@@ -68,5 +68,3 @@ jobs:
           commit_message: 'docs(src/assets/): update ${{ matrix.manager }} official documentation'
           commit_options: '--signoff'
           file_pattern: 'src/assets/${{ matrix.manager }}/*'
-          disable_globbing: true
-          status_options: '--untracked-files=no'
