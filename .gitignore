@@ -47,8 +47,10 @@ nosetests.xml
 coverage.xml
 *.cover
 *.py.cover
+*.lcov
 .hypothesis/
 .pytest_cache/
+.nyc_output
 cover/
 
 # Translations
@@ -137,6 +139,10 @@ celerybeat.pid
 # Environments
 .env
 .envrc
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
 .venv
 env/
 venv/
@@ -173,7 +179,7 @@ cython_debug/
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
+.idea/
 
 # Abstra
 # Abstra is an AI-powered process automation framework.
@@ -186,7 +192,11 @@ cython_debug/
 #  that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
 #  and can be added to the global gitignore or merged into this file. However, if you prefer, 
 #  you could uncomment the following to ignore the entire vscode folder
-# .vscode/
+.vscode/*
+!.vscode/extensions.json
+
+# Sublime Text
+*.sublime-workspace
 
 # Ruff stuff:
 .ruff_cache/
@@ -205,3 +215,44 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# OS and System Files
+# macOS - System files that store metadata, icons, and settings
+.DS_Store
+.DS_Store?
+._*
+.AppleDouble
+.LSOverride
+Icon?
+.Spotlight-V100
+.Trashes
+
+# Windows - System-generated files and folders
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux - System and folder-specific files
+.directory
+.Trash-*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Additional logs
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Cache directories
+.parcel-cache

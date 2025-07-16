@@ -1,0 +1,23 @@
+name: Auto Update Orchestrator
+
+on:
+  schedule:
+    # Tuesday 6pm ET (22:00 UTC, accounting for EST/EDT)
+    - cron: '0 22 * * 2'
+  workflow_dispatch: {} # Manual trigger for testing
+
+jobs:
+  update-docs:
+    name: Update Documentation
+    uses: ./.github/workflows/auto-update-docs.yml
+    
+  # TODO: Add when implemented
+  # update-index:
+  #   name: Update Search Index
+  #   needs: update-docs
+  #   uses: ./.github/workflows/auto-update-index.yml
+    
+  # build-deploy:
+  #   name: Build and Deploy
+  #   needs: update-index
+  #   uses: ./.github/workflows/auto-build-and-deploy.yml
