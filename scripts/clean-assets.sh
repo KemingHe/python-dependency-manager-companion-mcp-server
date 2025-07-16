@@ -130,7 +130,7 @@ clean_directory() {
     
     # Count files before cleanup
     local total_before
-    total_before=$(find "$target_dir" -type f 2>/dev/null | wc -l | tr -d ' ')
+    total_before=$(find "$target_dir" -type f 2>/dev/null | wc -l | tr -d ' ') || total_before=0
     
     # Find and remove non-documentation files using configurable include/exclude lists
     local removed_count=0
@@ -143,9 +143,12 @@ clean_directory() {
         fi
         
         # Remove the file
-        rm -f "$file"
-        ((removed_count++))
-        log_info "Removed: ${file#"$target_dir"/}"
+        if rm -f "$file" 2>/dev/null; then
+            ((removed_count++))
+            log_info "Removed: ${file#"$target_dir"/}"
+        else
+            log_warning "Failed to remove: ${file#"$target_dir"/}"
+        fi
     done < <(find "$target_dir" -type f -print0 2>/dev/null)
     
     # Remove empty directories (but keep the main structure)
@@ -154,11 +157,22 @@ clean_directory() {
     local kept_count
     kept_count=$((total_before - removed_count))
     
+    # Calculate percentage safely
+    local percentage="N/A"
+    if [[ $total_before -gt 0 ]]; then
+        if command -v bc >/dev/null 2>&1; then
+            percentage=$(echo "scale=1; $removed_count * 100 / $total_before" | bc -l 2>/dev/null || echo "N/A")
+        else
+            # Fallback calculation without bc (using integer arithmetic)
+            percentage=$(( (removed_count * 100) / total_before )) 2>/dev/null || percentage="N/A"
+        fi
+    fi
+    
     log_success "Cleanup complete for $dir_name:"
     log_success "  Files before: $total_before"
     log_success "  Files removed: $removed_count"
     log_success "  Files kept: $kept_count"
-    log_success "  Space saved: $(echo "scale=1; $removed_count * 100 / $total_before" | bc -l 2>/dev/null || echo "N/A")%"
+    log_success "  Space saved: ${percentage}%"
 }
 
 # Main execution
