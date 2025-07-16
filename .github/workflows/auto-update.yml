@@ -9,6 +9,8 @@ on:
 jobs:
   update-docs:
     name: Update Documentation
+    permissions:
+      contents: write
     uses: ./.github/workflows/auto-update-docs.yml
     
   # TODO: Add when implemented
