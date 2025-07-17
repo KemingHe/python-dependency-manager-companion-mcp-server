@@ -5,237 +5,105 @@
 # Updated on 2025-07-16 by @KemingHe
 # 
 # Purpose: Remove non-documentation files from dependency manager docs
-# Configurable include/exclude lists for flexible cleanup
+# Simple and safe approach using find with -delete
 # Works on: temp-docs/ (during workflow) and src/assets/ (existing cleanup)
-#
-# Compatible with bash, zsh, GitHub Actions runner environments
 
-set -euo pipefail  # Exit on error, undefined vars, pipe failures
+# Exit immediately if a command exits with a non-zero status.
+set -e
 
-# =============================================================================
-# CONFIGURATION: Include/Exclude Lists (exclude takes priority)
-# =============================================================================
+# --- Configuration ---
+# Convert comma-separated strings to arrays for easier processing.
+INCLUDE_EXTENSIONS="md,rst"
+INCLUDE_FILENAMES="_metadata.yml"
 
-# Files to ALWAYS keep (include list)
-INCLUDE_EXTENSIONS=("md" "rst")
-INCLUDE_FILENAMES=("_metadata.yml")
+# --- Logging ---
+echo "[INFO] Starting documentation cleanup process..."
+echo "[INFO] Include extensions: ${INCLUDE_EXTENSIONS}"
+echo "[INFO] Include filenames: ${INCLUDE_FILENAMES}"
+echo "[INFO] All non-included files will be REMOVED"
+echo ""
 
-# Files to ALWAYS remove (exclude list - higher priority)
-# Note: PDFs removed because Tantivy cannot index binary files directly
-# Note: PUML files reconsidered - they contain valuable architecture docs but aren't searchable
-EXCLUDE_EXTENSIONS=("py" "js" "css" "html" "json" "yml" "yaml" "txt" "pdf" "png" "jpg" "jpeg" "svg" "ico" "gif" "csv" "puml" "dot" "in")
-EXCLUDE_FILENAMES=("Makefile" "requirements.txt" "robots.txt" ".gitkeep")
-
-# Special handling: files that match include but should be excluded anyway
-FORCE_EXCLUDE_PATTERNS=("requirements.txt" "requirements-*.txt" "requirements-*.in")
-
-# Color output for better UX (if terminal supports it)
-if [[ -t 1 ]]; then
-    RED='\033[0;31m'
-    GREEN='\033[0;32m'
-    YELLOW='\033[1;33m'
-    BLUE='\033[0;34m'
-    NC='\033[0m' # No Color
-else
-    RED='' GREEN='' YELLOW='' BLUE='' NC=''
-fi
-
-# Logging functions
-log_info() {
-    echo -e "${BLUE}[INFO]${NC} $1"
-}
-
-log_success() {
-    echo -e "${GREEN}[SUCCESS]${NC} $1"
-}
-
-log_warning() {
-    echo -e "${YELLOW}[WARNING]${NC} $1"
-}
-
-log_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
-}
-
-# Function to check if a file should be kept
-should_keep_file() {
-    local file_path="$1"
-    local filename
-    filename=$(basename "$file_path")
-    
-    # Extract extension properly (handle files without extensions)
-    local extension=""
-    if [[ "$filename" == *.* ]]; then
-        extension="${filename##*.}"
-    fi
-    
-    # 1. Force exclude patterns (highest priority)
-    for pattern in "${FORCE_EXCLUDE_PATTERNS[@]}"; do
-        # shellcheck disable=SC2053 # Intentional glob matching for patterns like "requirements-*.txt"
-        if [[ "$filename" == $pattern ]]; then
-            return 1  # Remove
-        fi
-    done
-    
-    # 2. Include filenames (exact match, overrides extension rules)
-    for include_name in "${INCLUDE_FILENAMES[@]}"; do
-        if [[ "$filename" == "$include_name" ]]; then
-            return 0  # Keep
-        fi
-    done
-    
-    # 3. Exclude filenames (exact match)
-    for exclude_name in "${EXCLUDE_FILENAMES[@]}"; do
-        if [[ "$filename" == "$exclude_name" ]]; then
-            return 1  # Remove
-        fi
-    done
-    
-    # 4. Check extensions only if file has an extension
-    if [[ -n "$extension" ]]; then
-        # 4a. Exclude extensions
-        for exclude_ext in "${EXCLUDE_EXTENSIONS[@]}"; do
-            if [[ "$extension" == "$exclude_ext" ]]; then
-                return 1  # Remove
-            fi
-        done
-        
-        # 4b. Include extensions
-        for include_ext in "${INCLUDE_EXTENSIONS[@]}"; do
-            if [[ "$extension" == "$include_ext" ]]; then
-                return 0  # Keep
-            fi
-        done
-    fi
-    
-    # 5. Default behavior depends on whether we have include rules
-    if [[ ${#INCLUDE_EXTENSIONS[@]} -eq 0 && ${#INCLUDE_FILENAMES[@]} -eq 0 ]]; then
-        return 0  # No include rules = keep by default (blacklist mode)
-    else
-        return 1  # Has include rules = remove if not matched (whitelist mode)
-    fi
-}
-
-# Function to clean a directory
-clean_directory() {
+# Function to clean a directory using simple find approach
+clean_directory_simple() {
     local target_dir="$1"
     local dir_name="$2"
     
-    if [[ ! -d "$target_dir" ]]; then
-        log_warning "Directory $target_dir does not exist, skipping"
+    # Check if the target directory exists. If not, there's nothing to do.
+    if [ ! -d "$target_dir" ]; then
+        echo "[WARN] Directory '$target_dir' not found. Skipping cleanup."
         return 0
     fi
     
-    log_info "Cleaning $dir_name: $target_dir"
+    echo "[INFO] Cleaning $dir_name: $target_dir"
     
     # Count files before cleanup
-    local total_before=0
-    if total_before=$(find "$target_dir" -type f 2>/dev/null | wc -l | tr -d ' ' 2>/dev/null); then
-        total_before=${total_before:-0}
-    else
-        total_before=0
-        log_warning "Could not count files in $target_dir, proceeding with cleanup"
+    local total_before
+    total_before=$(find "$target_dir" -type f 2>/dev/null | wc -l | tr -d ' ') || total_before=0
+    
+    # Build the find command to locate all files that should be deleted
+    # We want to find all files that DO NOT match our inclusion criteria
+    local find_cmd="find \"$target_dir\" -type f"
+    
+    # 1. Handle included filenames (exact matches to keep)
+    IFS=',' read -ra DONT_DELETE_FILENAMES <<< "$INCLUDE_FILENAMES"
+    for filename in "${DONT_DELETE_FILENAMES[@]}"; do
+        find_cmd+=" -not -name '$filename'"
+    done
+    
+    # 2. Handle included extensions (extensions to keep)
+    IFS=',' read -ra DONT_DELETE_EXTS <<< "$INCLUDE_EXTENSIONS"
+    for ext in "${DONT_DELETE_EXTS[@]}"; do
+        find_cmd+=" -not -name '*.$ext'"
+    done
+    
+    # Execute the find command and delete the files found
+    # The '|| true' ensures that even if find fails, it won't stop the script
+    echo "[INFO] Finding and deleting non-essential files..."
+    eval "$find_cmd" -delete || true
+    
+    # Count files after cleanup
+    local total_after
+    total_after=$(find "$target_dir" -type f 2>/dev/null | wc -l | tr -d ' ') || total_after=0
+    
+    # Calculate removed count and percentage
+    local removed_count=$((total_before - total_after))
+    local percentage=0
+    if [ "$total_before" -gt 0 ]; then
+        percentage=$(( (removed_count * 100) / total_before ))
     fi
     
-    # Find and remove non-documentation files using configurable include/exclude lists
-    local removed_count=0
-    
-    # Get list of all files first, then process them
-    local temp_file_list
-    temp_file_list=$(mktemp) || temp_file_list="/tmp/clean_assets_$$"
-    
-    if find "$target_dir" -type f > "$temp_file_list" 2>/dev/null; then
-        while IFS= read -r file; do
-            # Skip empty lines
-            [[ -n "$file" ]] || continue
-            
-            # Use modular function to check if file should be kept
-            if should_keep_file "$file"; then
-                continue  # Keep this file
-            fi
-            
-            # Remove the file
-            if rm -f "$file" 2>/dev/null; then
-                ((removed_count++))
-                log_info "Removed: ${file#"$target_dir"/}"
-            else
-                log_warning "Failed to remove: ${file#"$target_dir"/}"
-            fi
-        done < "$temp_file_list"
-    else
-        log_warning "Could not list files in $target_dir, skipping cleanup"
-    fi
-    
-    # Clean up temp file
-    rm -f "$temp_file_list" 2>/dev/null || true
-    
-    # Remove empty directories (but keep the main structure)
-    find "$target_dir" -type d -empty -not -path "$target_dir" -delete 2>/dev/null || true
-    
-    local kept_count
-    kept_count=$((total_before - removed_count))
-    
-    # Calculate percentage safely
-    local percentage="N/A"
-    if [[ $total_before -gt 0 ]]; then
-        if command -v bc >/dev/null 2>&1; then
-            percentage=$(echo "scale=1; $removed_count * 100 / $total_before" | bc -l 2>/dev/null || echo "N/A")
-        else
-            # Fallback calculation without bc (using integer arithmetic)
-            percentage=$(( (removed_count * 100) / total_before )) 2>/dev/null || percentage="N/A"
-        fi
-    fi
-    
-    log_success "Cleanup complete for $dir_name:"
-    log_success "  Files before: $total_before"
-    log_success "  Files removed: $removed_count"
-    log_success "  Files kept: $kept_count"
-    log_success "  Space saved: ${percentage}%"
+    echo "[SUCCESS] Cleanup complete for $dir_name:"
+    echo "[SUCCESS]   Files before: $total_before"
+    echo "[SUCCESS]   Files removed: $removed_count"
+    echo "[SUCCESS]   Files kept: $total_after"
+    echo "[SUCCESS]   Space saved: ${percentage}%"
 }
 
 # Main execution
 main() {
-    log_info "Starting documentation cleanup process..."
-    log_info "Include extensions: ${INCLUDE_EXTENSIONS[*]}"
-    log_info "Include filenames: ${INCLUDE_FILENAMES[*]}"
-    log_info "Exclude extensions: ${EXCLUDE_EXTENSIONS[*]}"
-    log_info "All non-included files will be REMOVED"
-    echo
-    
     # Clean temp-docs directory (used during GitHub Actions workflow)
-    if [[ -d "temp-docs" ]]; then
-        clean_directory "temp-docs" "Workflow temp directory"
-        echo
+    if [ -d "temp-docs" ]; then
+        clean_directory_simple "temp-docs" "Workflow temp directory"
+        echo ""
     fi
     
     # Clean existing src/assets directory
-    if [[ -d "src/assets" ]]; then
-        clean_directory "src/assets" "Assets directory"
-        echo
+    if [ -d "src/assets" ]; then
+        clean_directory_simple "src/assets" "Assets directory"
+        echo ""
     fi
     
     # If no directories found, show usage
-    if [[ ! -d "temp-docs" && ! -d "src/assets" ]]; then
-        log_warning "No target directories found (temp-docs/ or src/assets/)"
-        log_info "Usage: Run this script from the project root directory"
-        log_info "       It will clean temp-docs/ and/or src/assets/ if they exist"
-        return 1
+    if [ ! -d "temp-docs" ] && [ ! -d "src/assets" ]; then
+        echo "[WARN] No target directories found (temp-docs/ or src/assets/)"
+        echo "[INFO] Usage: Run this script from the project root directory"
+        echo "[INFO]        It will clean temp-docs/ and/or src/assets/ if they exist"
+        exit 0
     fi
     
-    log_success "Documentation cleanup completed successfully!"
-    log_info "Only included file types remain: ${INCLUDE_EXTENSIONS[*]} and ${INCLUDE_FILENAMES[*]}"
+    echo "[SUCCESS] Documentation cleanup completed successfully!"
+    echo "[INFO] Only included file types remain: ${INCLUDE_EXTENSIONS} and ${INCLUDE_FILENAMES}"
 }
-
-# Check for required tools
-if ! command -v find >/dev/null 2>&1; then
-    log_error "Required tool 'find' not found"
-    exit 1
-fi
-
-# Check if bc is available for percentage calculation (optional)
-if ! command -v bc >/dev/null 2>&1; then
-    log_warning "Tool 'bc' not found - percentage calculations will be skipped"
-fi
 
 # Run main function
 main "$@" 
