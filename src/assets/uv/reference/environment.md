@@ -26,6 +26,10 @@ directory for caching instead of the default cache directory.
 Equivalent to the `--compile-bytecode` command-line argument. If set, uv
 will compile Python source files to bytecode after installation.
 
+### `UV_COMPILE_BYTECODE_TIMEOUT`
+
+Timeout (in seconds) for bytecode compilation.
+
 ### `UV_CONCURRENT_BUILDS`
 
 Sets the maximum number of source distributions that uv will build
@@ -166,6 +170,11 @@ Defaults to `~/.local/bin`.
 
 Equivalent to the `--keyring-provider` command-line argument. If set, uv
 will use this value as the keyring provider.
+
+### `UV_LIBC`
+
+Overrides the environment-determined libc on linux systems when filling in the current platform
+within Python version requests. Options are: `gnu`, `gnueabi`, `gnueabihf`, `musl`, and `none`.
 
 ### `UV_LINK_MODE`
 
@@ -367,6 +376,10 @@ This will allow for setting each property of the Python installation, mostly the
 
 Note that currently, only local paths are supported.
 
+### `UV_PYTHON_INSTALL_BIN`
+
+Whether to install the Python executable into the `UV_PYTHON_BIN_DIR` directory.
+
 ### `UV_PYTHON_INSTALL_DIR`
 
 Specifies the directory for storing managed Python installations.
@@ -380,6 +393,10 @@ This variable can be set to a mirror URL to use a different source for Python in
 The provided URL will replace `https://github.com/astral-sh/python-build-standalone/releases/download` in, e.g.,
 `https://github.com/astral-sh/python-build-standalone/releases/download/20240713/cpython-3.12.4%2B20240713-aarch64-apple-darwin-install_only.tar.gz`.
 Distributions can be read from a local directory by using the `file://` URL scheme.
+
+### `UV_PYTHON_INSTALL_REGISTRY`
+
+Whether to install the Python executable into the Windows registry.
 
 ### `UV_PYTHON_PREFERENCE`
 
