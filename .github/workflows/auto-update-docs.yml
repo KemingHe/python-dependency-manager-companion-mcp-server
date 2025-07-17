@@ -63,6 +63,7 @@ jobs:
           
       - name: Clean non-documentation files
         run: ./scripts/clean-assets.sh
+        shell: bash {0}  # Avoid double -e flag since script already has -euo pipefail
 
       - name: Pull latest changes by previous update-docs job
         run: git pull origin main

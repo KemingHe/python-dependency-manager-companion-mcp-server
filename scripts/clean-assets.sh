@@ -129,27 +129,45 @@ clean_directory() {
     log_info "Cleaning $dir_name: $target_dir"
     
     # Count files before cleanup
-    local total_before
-    total_before=$(find "$target_dir" -type f 2>/dev/null | wc -l | tr -d ' ') || total_before=0
+    local total_before=0
+    if total_before=$(find "$target_dir" -type f 2>/dev/null | wc -l | tr -d ' ' 2>/dev/null); then
+        total_before=${total_before:-0}
+    else
+        total_before=0
+        log_warning "Could not count files in $target_dir, proceeding with cleanup"
+    fi
     
     # Find and remove non-documentation files using configurable include/exclude lists
     local removed_count=0
     
-    # Use find with modular file checking
-    while IFS= read -r -d '' file; do
-        # Use modular function to check if file should be kept
-        if should_keep_file "$file"; then
-            continue  # Keep this file
-        fi
-        
-        # Remove the file
-        if rm -f "$file" 2>/dev/null; then
-            ((removed_count++))
-            log_info "Removed: ${file#"$target_dir"/}"
-        else
-            log_warning "Failed to remove: ${file#"$target_dir"/}"
-        fi
-    done < <(find "$target_dir" -type f -print0 2>/dev/null)
+    # Get list of all files first, then process them
+    local temp_file_list
+    temp_file_list=$(mktemp) || temp_file_list="/tmp/clean_assets_$$"
+    
+    if find "$target_dir" -type f > "$temp_file_list" 2>/dev/null; then
+        while IFS= read -r file; do
+            # Skip empty lines
+            [[ -n "$file" ]] || continue
+            
+            # Use modular function to check if file should be kept
+            if should_keep_file "$file"; then
+                continue  # Keep this file
+            fi
+            
+            # Remove the file
+            if rm -f "$file" 2>/dev/null; then
+                ((removed_count++))
+                log_info "Removed: ${file#"$target_dir"/}"
+            else
+                log_warning "Failed to remove: ${file#"$target_dir"/}"
+            fi
+        done < "$temp_file_list"
+    else
+        log_warning "Could not list files in $target_dir, skipping cleanup"
+    fi
+    
+    # Clean up temp file
+    rm -f "$temp_file_list" 2>/dev/null || true
     
     # Remove empty directories (but keep the main structure)
     find "$target_dir" -type d -empty -not -path "$target_dir" -delete 2>/dev/null || true
