@@ -14,7 +14,7 @@ set -e
 # --- Configuration ---
 # Convert comma-separated strings to arrays for easier processing.
 INCLUDE_EXTENSIONS="md,rst"
-INCLUDE_FILENAMES="_metadata.yml"
+INCLUDE_FILENAMES="_metadata.json"
 
 # --- Logging ---
 echo "[INFO] Starting documentation cleanup process..."

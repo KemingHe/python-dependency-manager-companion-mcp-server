@@ -10,7 +10,7 @@ their source package manager.
 import logging
 from pathlib import Path
 from typing import Dict, Any
-import yaml
+import json
 import tantivy
 
 
@@ -26,10 +26,10 @@ INDEX_DIR = Path("src/index")
 
 
 def load_metadata(metadata_path: Path) -> Dict[str, Any]:
-    """Load package metadata from _metadata.yml file."""
+    """Load package metadata from _metadata.json file."""
     try:
         with open(metadata_path, "r", encoding="utf-8") as f:
-            return yaml.safe_load(f) or {}
+            return json.load(f) or {}
     except Exception as e:
         logger.warning(f"Failed to load metadata from {metadata_path}: {e}")
         return {}
@@ -93,7 +93,7 @@ def find_markdown_files(assets_dir: Path) -> list[tuple[Path, str, Dict[str, Any
             continue
 
         package_name = package_dir.name
-        metadata_path = package_dir / "_metadata.yml"
+        metadata_path = package_dir / "_metadata.json"
         metadata = load_metadata(metadata_path)
 
         logger.info(f"Scanning {package_name} documentation...")

@@ -56,10 +56,14 @@ jobs:
           cp -a temp-docs/${{ matrix.docs_path }}/* ${{ matrix.target_dir }}/
           
           # Add metadata file with source info
-          echo "source_repo: ${{ matrix.repo }}" > ${{ matrix.target_dir }}/_metadata.yml
-          echo "docs_path: ${{ matrix.docs_path }}" >> ${{ matrix.target_dir }}/_metadata.yml
-          echo "updated_at: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ${{ matrix.target_dir }}/_metadata.yml
-          echo "commit_sha: $(cd temp-docs && git rev-parse HEAD)" >> ${{ matrix.target_dir }}/_metadata.yml
+          cat > ${{ matrix.target_dir }}/_metadata.json << EOF
+          {
+            "source_repo": "${{ matrix.repo }}",
+            "docs_path": "${{ matrix.docs_path }}",
+            "updated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "commit_sha": "$(cd temp-docs && git rev-parse HEAD)"
+          }
+          EOF
           
       - name: Clean non-documentation files
         run: ./scripts/clean-assets.sh
