@@ -110,7 +110,6 @@ def search_py_dep_manager_docs(
     
     ⚡ EXECUTION STRATEGY (85%+ first-call success):
     - MANDATORY: Multi-call progress report format:
-
       ```markdown
       ### 📊 [Topic] Research - Progress Report [X]
 
@@ -118,7 +117,6 @@ def search_py_dep_manager_docs(
       - 🔄 **Next**: [specific gap]
       - 🎯 **Goal**: [deliverable]
       ```
-
     - WHY: Users lose confidence without progress visibility; structured updates prevent confusion
     - WHEN: Use progress report format for ANY multi-step research (migration guides, comparisons, complex tutorials)
     - ENFORCEMENT: Show progress header AFTER EVERY INDIVIDUAL TOOL CALL, not just at final response (why: continuous user confidence)
