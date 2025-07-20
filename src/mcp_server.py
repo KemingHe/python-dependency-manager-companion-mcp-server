@@ -109,11 +109,20 @@ def search_py_dep_manager_docs(
     🎯 CORE VALUE: Access to authoritative, up-to-date official docs that general knowledge can't provide.
     
     ⚡ EXECUTION STRATEGY (85%+ first-call success):
-    - MANDATORY: Multi-call progress format: "📊 **[Topic] Research - Call X/Y** ✅ **Gathered**: [key findings] 🔄 **Next**: [specific gap] 🎯 **Goal**: [deliverable]"
+    - MANDATORY: Multi-call progress report format:
+
+      ```markdown
+      ### 📊 [Topic] Research - Progress Report [X]
+
+      - ✅ **Gathered**: [key findings]
+      - 🔄 **Next**: [specific gap]
+      - 🎯 **Goal**: [deliverable]
+      ```
+
     - WHY: Users lose confidence without progress visibility; structured updates prevent confusion
-    - WHEN: Use progress format for ANY multi-step research (migration guides, comparisons, complex tutorials)
-    - ENFORCEMENT: Show progress header AFTER EVERY INDIVIDUAL CALL, not just at final response (why: continuous user confidence)
-    - TIMING: Call 1 → Progress 1/N → Call 2 → Progress 2/N → Call 3 → Progress 3/N → Final Answer (why: step-by-step transparency)
+    - WHEN: Use progress report format for ANY multi-step research (migration guides, comparisons, complex tutorials)
+    - ENFORCEMENT: Show progress header AFTER EVERY INDIVIDUAL TOOL CALL, not just at final response (why: continuous user confidence)
+    - TIMING: Tool call 1 → Progress Report 1 → Tool call 2 → Progress Report 2 → etc. → Final Answer (why: step-by-step transparency)
     - PATTERNS: Start with proven query patterns below for maximum hit rate
     
     🎯 PROVEN QUERY PATTERNS (use these exact phrases for maximum results):
