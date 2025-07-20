@@ -48,7 +48,7 @@ file, open a terminal and enter the ``conda config`` command.
 The ``.condarc`` configuration file follows simple
 `YAML syntax <https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html>`_.
 
-**Example**:
+**Example:**
 
 .. code-block:: yaml
 
@@ -73,7 +73,7 @@ home directory or root directory.
 To set configuration options, edit the ``.condarc`` file directly
 or use the ``conda config --set`` command.
 
-**Example**:
+**Example:**
 
 To set the ``auto_update_conda option`` to ``False``, run::
 
