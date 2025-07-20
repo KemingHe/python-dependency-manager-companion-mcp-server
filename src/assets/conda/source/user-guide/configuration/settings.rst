@@ -22,7 +22,7 @@ Non-URL channels are interpreted as Anaconda.org user or organization
 names. You can change this by modifying the ``channel_alias`` as described
 in :ref:`set-ch-alias`. The default is just ``defaults``.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -36,7 +36,7 @@ To select channels for a single environment, put a ``.condarc``
 file in the root directory of that environment (or use the
 ``--env`` option when using ``conda config``).
 
-**Example:** If you have installed Miniconda with Python 3 in your
+**Example**: If you have installed Miniconda with Python 3 in your
 home directory and the environment is named "flowers", the
 path may be::
 
@@ -111,7 +111,7 @@ can access, especially in enterprise or multi-user environments.
 
 The denylist takes precedence over the allowlist. If a channel is in both lists, it is denied.
 
-**Examples:**
+**Examples**:
 
 An example which allows the ``defaults`` and ``conda-forge`` channels with the ``allowlist_channels``
 setting is:
@@ -180,7 +180,7 @@ installs a package in the root environment. When ``False``,
 conda updates itself only if the user manually issues a
 ``conda update`` command. The default is ``True``.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -195,7 +195,7 @@ Choose the ``yes`` option whenever asked to proceed, such as
 when installing. Same as using the ``--yes`` flag at the
 command line. The default is ``False``.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -209,7 +209,7 @@ command line. The default is ``False``.
 Show channel URLs in ``conda list`` and when displaying what is
 going to be downloaded. The default is ``False``.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -223,7 +223,7 @@ going to be downloaded. The default is ``False``.
 When using ``conda activate``, change the command prompt from ``$PS1``
 to include the activated environment. The default is ``True``.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -238,7 +238,7 @@ Add pip, wheel, and setuptools as dependencies of Python. This
 ensures that pip, wheel, and setuptools are always installed any
 time Python is installed. The default is ``True``.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -253,7 +253,7 @@ Use pip when listing packages with ``conda list``. This does not
 affect any conda command or functionality other than the output
 of the command ``conda list``. The default is ``True``.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -348,7 +348,7 @@ which can be used to verify SSL connections:
 Filters out all channel URLs that do not use the ``file://``
 protocol. The default is ``False``.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -374,7 +374,7 @@ specifying that certain files should never be soft linked.
 
 The default is ``False``.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -407,7 +407,7 @@ is the same as::
 
 You can set ``channel_alias`` to your own repository.
 
-**Example:** To set ``channel_alias`` to your repository at
+**Example**: To set ``channel_alias`` to your repository at
 https://your.repo.com:
 
 .. code-block:: yaml
@@ -416,7 +416,7 @@ https://your.repo.com:
 
 On Windows, you must include a slash ("/") at the end of the URL:
 
-**Example:** https://your.repo/conda/
+**Example**: https://your.repo/conda/
 
 When ``channel_alias`` set to your repository at
 https://your.repo.com::
@@ -438,7 +438,7 @@ you create. You can override this option at the command prompt
 with the ``--no-default-packages`` flag. The default is to not
 include any packages.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -456,7 +456,7 @@ Enable certain features to be tracked by default. The default is
 to not track any features. This is similar to adding MKL to
 the ``create_default_packages`` list.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -480,7 +480,7 @@ set ``update_dependencies`` to ``True``.
 
 The default is ``False``.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -507,7 +507,7 @@ better option may be to pin them. For more information, see
 Disallow the installation of certain packages. The default is to
 allow installation of all packages.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -528,7 +528,7 @@ automatically add the token to the channel URLs.
 
 The default is ``True``.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -554,7 +554,7 @@ For each envs here, ``envs/pkgs`` is used as the pkgs cache,
 except for the standard ``envs`` directory in the root
 directory, for which the normal ``root_dir/pkgs`` is used.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -583,7 +583,7 @@ If the ``pkgs_dirs`` key is not set, then ``envs/pkgs`` is used
 as the pkgs cache, except for the standard ``envs`` directory in the root
 directory, for which the normal ``root_dir/pkgs`` is used.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -613,7 +613,7 @@ by setting the ``use_only_tar_bz2`` boolean to ``True``.
 
 The default is ``False``.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -664,7 +664,7 @@ Build output root directory. You can also set this with the
 permissions to ``<CONDA_PREFIX>/conda-bld/``, the default is
 ``~/conda-bld/``.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 
@@ -703,7 +703,7 @@ Conda package version to create. Use ``2`` for ``.conda`` packages. If not set, 
 Automatically upload packages built with conda-build to
 `Anaconda.org <http://anaconda.org>`_. The default is ``False``.
 
-**Example:**
+**Example**:
 
 .. code-block:: yaml
 

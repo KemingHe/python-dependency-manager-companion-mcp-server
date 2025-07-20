@@ -1,0 +1,190 @@
+#!/usr/bin/env python3
+"""
+Build search index for Python dependency manager documentation.
+
+Creates a Tantivy full-text search index from all markdown files in the assets
+directory, using metadata from the auto-update workflow to tag documents by
+their source package manager.
+"""
+
+import logging
+from pathlib import Path
+from typing import Dict, Any
+import yaml
+import tantivy
+
+
+# Configure logging for visibility into indexing process
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
+
+# Project paths
+ASSETS_DIR = Path("src/assets")
+INDEX_DIR = Path("src/index")
+
+
+def load_metadata(metadata_path: Path) -> Dict[str, Any]:
+    """Load package metadata from _metadata.yml file."""
+    try:
+        with open(metadata_path, "r", encoding="utf-8") as f:
+            return yaml.safe_load(f) or {}
+    except Exception as e:
+        logger.warning(f"Failed to load metadata from {metadata_path}: {e}")
+        return {}
+
+
+def create_schema() -> tantivy.Schema:
+    """
+    Create Tantivy schema for documentation search.
+
+    Fields:
+    - content: Full-text searchable markdown content
+    - path: File path for result retrieval
+    - package: Source package manager (pip, conda, poetry, uv) for filtering
+    - title: Document title extracted from file path
+    - source_repo: Original repository from metadata
+    - docs_path: Documentation directory path from metadata (for GitHub links)
+    """
+    schema_builder = tantivy.SchemaBuilder()
+
+    # Main searchable content - full-text with indexing and storage
+    schema_builder.add_text_field("content", stored=True)
+
+    # File path for retrieval - stored but not necessarily indexed for search
+    schema_builder.add_text_field("path", stored=True)
+
+    # Package name for filtering - indexed and stored
+    schema_builder.add_text_field("package", stored=True)
+
+    # Human-readable title - indexed and stored
+    schema_builder.add_text_field("title", stored=True)
+
+    # Source repository - indexed and stored
+    schema_builder.add_text_field("source_repo", stored=True)
+
+    # Documentation path - stored for GitHub link reconstruction
+    schema_builder.add_text_field("docs_path", stored=True)
+
+    return schema_builder.build()
+
+
+def extract_title_from_path(file_path: Path) -> str:
+    """Extract path-notation title from file path."""
+    # Convert to path notation preserving directory structure
+    # e.g., "src/assets/pip/cli/pip_install.rst" -> "pip/cli/pip_install.rst"
+    parts = file_path.parts[2:]  # Skip "src/assets"
+    filtered_parts = [part for part in parts if part != "index.md"]
+    return "/".join(filtered_parts)
+
+
+def find_markdown_files(assets_dir: Path) -> list[tuple[Path, str, Dict[str, Any]]]:
+    """
+    Find all markdown files in assets directory.
+
+    Returns:
+        List of tuples (file_path, package_name, metadata)
+    """
+    markdown_files = []
+
+    for package_dir in assets_dir.iterdir():
+        if not package_dir.is_dir():
+            continue
+
+        package_name = package_dir.name
+        metadata_path = package_dir / "_metadata.yml"
+        metadata = load_metadata(metadata_path)
+
+        logger.info(f"Scanning {package_name} documentation...")
+
+        # Find all markdown and reStructuredText files
+        for pattern in ["**/*.md", "**/*.rst"]:
+            for file_path in package_dir.glob(pattern):
+                if file_path.is_file():
+                    markdown_files.append((file_path, package_name, metadata))
+
+    return markdown_files
+
+
+def read_file_content(file_path: Path) -> str:
+    """Read file content with multiple encoding fallbacks."""
+    encodings = ["utf-8", "utf-8-sig", "latin1", "cp1252"]
+
+    for encoding in encodings:
+        try:
+            with open(file_path, "r", encoding=encoding) as f:
+                return f.read()
+        except UnicodeDecodeError:
+            continue
+        except Exception as e:
+            logger.warning(f"Error reading {file_path}: {e}")
+            break
+
+    logger.error(f"Failed to read {file_path} with any encoding")
+    return ""
+
+
+def build_index():
+    """Build the Tantivy search index from all documentation files."""
+    logger.info("Starting index build process...")
+
+    # Remove existing index to prevent schema conflicts
+    if INDEX_DIR.exists():
+        logger.info(f"Removing existing index at {INDEX_DIR}")
+        import shutil
+        shutil.rmtree(INDEX_DIR)
+
+    # Create index directory
+    INDEX_DIR.mkdir(exist_ok=True)
+
+    # Create schema and index
+    schema = create_schema()
+    index = tantivy.Index(schema, path=str(INDEX_DIR))
+    writer = index.writer(heap_size=50_000_000)  # 50MB heap for better performance
+
+    # Find all documentation files
+    markdown_files = find_markdown_files(ASSETS_DIR)
+    logger.info(f"Found {len(markdown_files)} documentation files")
+
+    # Index each file
+    indexed_count = 0
+    for file_path, package_name, metadata in markdown_files:
+        try:
+            content = read_file_content(file_path)
+            if not content.strip():
+                continue
+
+            title = extract_title_from_path(file_path)
+            source_repo = metadata.get("source_repo", "unknown")
+            docs_path = metadata.get("docs_path", "docs")
+
+            # Create document
+            doc = tantivy.Document(
+                content=content,
+                path=str(file_path.relative_to(ASSETS_DIR)),
+                package=package_name,
+                title=title,
+                source_repo=source_repo,
+                docs_path=docs_path,
+            )
+
+            writer.add_document(doc)
+            indexed_count += 1
+
+            if indexed_count % 100 == 0:
+                logger.info(f"Indexed {indexed_count} documents...")
+
+        except Exception as e:
+            logger.error(f"Failed to index {file_path}: {e}")
+
+    # Commit the index to disk
+    logger.info("Committing index to disk...")
+    writer.commit()
+
+    logger.info(f"Index build complete! Indexed {indexed_count} documents")
+    logger.info(f"Index stored in: {INDEX_DIR.absolute()}")
+
+
+if __name__ == "__main__":
+    build_index()

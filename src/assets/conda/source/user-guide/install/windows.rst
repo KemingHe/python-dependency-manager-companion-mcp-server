@@ -61,7 +61,7 @@ argument. The following optional arguments are supported:
 
 All arguments are case-sensitive.
 
-**Example:** The following command installs Miniconda for the
+**Example**: The following command installs Miniconda for the
 current user without registering Python as the system's default:
 
 .. code-block:: bat

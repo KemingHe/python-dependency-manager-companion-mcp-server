@@ -53,18 +53,18 @@ Some users also mentioned that they would like the search to be configurable, e.
 
 When asked how they would improve pip search, users said they would improve:
 
-**1. Search methods:**
+**1. Search methods**:
 
 - fuzzy search and insensitive case should be acceptable
 - users should have the option to filter/sort by description, name, tag
 
-**2. Search results:**
+**2. Search results**:
 
 - relevancy: the results should show both the exact match and closest match
 - order/category: the result should display items in a certain order, e.g highest number of downloads (popularity), development status (last updated/latest version), etc.
 - there should be a limited number of search results
 
-**3. User interface:**
+**3. User interface**:
 
 - link package to pypi page
 - use color coding / system for better clarity
