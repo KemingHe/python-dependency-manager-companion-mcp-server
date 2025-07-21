@@ -1,6 +1,6 @@
 # Workflow Architecture
 
-> Updated on 2025-07-20 by @KemingHe
+> Updated on 2025-07-21 by @KemingHe
 
 Modular automation for weekly Python dependency manager documentation updates.
 
@@ -20,7 +20,7 @@ graph LR
     UPDATE_INDEX --> PUBLISH
 ```
 
-**Security**: Pinned 3rd-party actions, signed commits, modular execution
+**Security**: Pinned 3rd-party actions, signed commits, modular execution, [CodeQL analysis](README-codeql.md)
 
 ## 🚀 Planned Extensions
 
