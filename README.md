@@ -1,12 +1,18 @@
 # Python Dependency Manager MCP Server
 
-> Updated on 2025-07-15 by @KemingHe
+> Updated on 2025-07-21 by @KemingHe
 
-Local stdio MCP server providing unified search across Python dependency managers' latest and official documentation.
+Local stdio MCP server providing unified search across Python dependency managers' latest and official documentation. [[Demo]](https://www.loom.com/share/a80f6041dc374c07b95b2397ee4e8ca1?sid=1209cdce-7239-447e-8b20-49eae454cc9a)
 
 ## 📋 Overview
 
-Unified search for pip, poetry, uv, and conda docs via Docker with automated weekly updates. Built with FastMCP and Tantivy for simple, AI-less full-text search.
+Unified search for pip, poetry, uv, and conda docs via Docker with automated weekly updates. Built with FastMCP and Tantivy for simple, accurate, embedding-free, full-text search.
+
+## 🎯 Use as Template
+
+**General use**: [[Use this repository as a template]](https://github.com/new?template_name=python-dependency-manager-companion-mcp-server&template_owner=KemingHe) for your own MCP server projects.
+
+**Contributing**: _Fork only to contribute back._ See [./CONTRIBUTING.md](./CONTRIBUTING.md) for development setup.
 
 ## 🚀 Getting Started
 
@@ -61,31 +67,10 @@ python-dep-manager-companion-mcp-server/
 └── uv.lock                   # Locked dependencies
 ```
 
-## 🛠️ Development
-
-**Transport**: Stdio only (MCP standard for local tools).
-
-**Local Development**:
-
-```shell
-# Clone and setup
-git clone <repo-url>
-cd python-dep-manager-companion-mcp-server
-uv sync
-
-# Run server locally
-uv run --with fastmcp --with tantivy fastmcp run src/mcp_server.py
-
-# Build Docker image
-docker build -t py-dep-man-companion .
-```
-
-**Roadmap**: Adding support for pipenv, pdm, pixi, and additional Python package managers.
-
 ## 📄 License
 
 This project is licensed under the [MIT License](./LICENSE) - a permissive license that allows free use, modification, and distribution with attribution.
 
 ## 📞 Support
 
-Open GitHub issues for bug reports and feature requests. Documentation is automatically updated weekly via workflows (see [.github/workflows/README.md](.github/workflows/README.md)).
+Open GitHub issues for bug reports and feature requests. Documentation is automatically updated weekly via workflows (see [./.github/workflows/README.md](./.github/workflows/README.md)).
