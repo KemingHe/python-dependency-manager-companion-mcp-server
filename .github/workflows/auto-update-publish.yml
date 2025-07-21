@@ -19,7 +19,7 @@ jobs:
     env:
       # Docker requires lowercase names for both images and cache references
       IMAGE_NAME: py-dep-man-companion
-      REPO_NAME: ${{ vars.DOCKER_HUB_USERNAME }}/py-dep-man-companion
+      REPO_NAME: ${{ vars.DOCKERHUB_USERNAME }}/py-dep-man-companion
 
     steps:
       - name: Checkout repository
@@ -31,8 +31,8 @@ jobs:
         # Pinned 3rd party action to commit hash of release v3.4.0 on 2025-03-14 to prevent supply chain attacks
         uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772
         with:
-          username: ${{ vars.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_PAT }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
