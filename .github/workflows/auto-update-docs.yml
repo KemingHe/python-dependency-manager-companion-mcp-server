@@ -11,10 +11,11 @@ concurrency:
 jobs:
   update-docs:
     name: Update ${{ matrix.manager }} docs
-    if: github.repository == 'KemingHe/python-dependency-manager-companion-mcp-server'
+    # Restrict to home repository and main branch only for security
+    if: github.repository == 'KemingHe/python-dependency-manager-companion-mcp-server' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write      # Required: commit documentation updates
     strategy:
       max-parallel: 1  # Prevent commit conflicts
       matrix:

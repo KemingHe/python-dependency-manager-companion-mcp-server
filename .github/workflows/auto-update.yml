@@ -9,22 +9,28 @@ on:
 jobs:
   update-docs:
     name: Update Documentation
+    # Restrict to home repository and main branch only for security
+    if: github.repository == 'KemingHe/python-dependency-manager-companion-mcp-server' && github.ref == 'refs/heads/main'
     permissions:
-      contents: write
+      contents: write      # Required: commit documentation updates
     uses: ./.github/workflows/auto-update-docs.yml
     
   update-index:
     name: Update Search Index
     needs: update-docs
+    # Restrict to home repository and main branch only for security
+    if: github.repository == 'KemingHe/python-dependency-manager-companion-mcp-server' && github.ref == 'refs/heads/main'
     permissions:
-      contents: write
+      contents: write      # Required: commit search index updates
     uses: ./.github/workflows/auto-update-index.yml
     
-  # publish:
-  #   name: Publish Image
-  #   needs: update-index
-  #   permissions:
-  #     contents: read
-  #     attestations: write
-  #     id-token: write
-  #   uses: ./.github/workflows/auto-update-publish.yml
+  publish:
+    name: Publish Image
+    needs: update-index
+    # Restrict to home repository and main branch only for security
+    if: github.repository == 'KemingHe/python-dependency-manager-companion-mcp-server' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read       # Minimum: checkout repository
+      attestations: write  # Required: artifact attestation
+      id-token: write      # Required: OIDC token for attestation
+    uses: ./.github/workflows/auto-update-publish.yml
