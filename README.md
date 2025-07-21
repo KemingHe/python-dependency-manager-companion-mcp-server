@@ -12,7 +12,7 @@ Unified search for pip, poetry, uv, and conda docs via Docker with automated wee
 
 **General use**: [[Use this repository as a template]](https://github.com/new?template_name=python-dependency-manager-companion-mcp-server&template_owner=KemingHe) for your own MCP server projects.
 
-**Contributing**: _Fork only to contribute back._ See [./CONTRIBUTING.md](./CONTRIBUTING.md) for development setup.
+**Contributing**: Fork to contribute back. See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup.
 
 ## 🚀 Getting Started
 
@@ -46,7 +46,7 @@ Query latest and unified documentation across all supported Python dependency ma
 ## 📁 Project Structure
 
 ```plaintext
-python-dep-manager-companion-mcp-server/
+python-dependency-manager-companion-mcp-server/
 ├── .github/workflows/            # Automation workflows
 │   ├── auto-update-docs.yml      # Weekly docs update
 │   ├── auto-update-index.yml     # Search index rebuild
@@ -73,4 +73,4 @@ This project is licensed under the [MIT License](./LICENSE) - a permissive licen
 
 ## 📞 Support
 
-Open GitHub issues for bug reports and feature requests. Documentation is automatically updated weekly via workflows (see [./.github/workflows/README.md](./.github/workflows/README.md)).
+Open GitHub issues for bug reports and feature requests. Documentation is automatically updated weekly via workflows (see [.github/workflows/README.md](./.github/workflows/README.md)).
