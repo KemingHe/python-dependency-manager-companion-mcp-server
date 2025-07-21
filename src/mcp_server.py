@@ -51,21 +51,26 @@ def _reconstruct_github_link(source_repo: str, docs_path: str, path: str) -> str
     """Reconstruct GitHub link from metadata."""
     if source_repo == "unknown" or not source_repo:
         return ""
-    
+
     # Clean the path to remove package prefix (e.g., "uv/guides/..." -> "guides/...")
     cleaned_path = "/".join(path.split("/")[1:]) if "/" in path else path
-    
+
     return f"https://github.com/{source_repo}/tree/main/{docs_path}/{cleaned_path}"
 
 
 def _create_content_preview(content: str, query: str, max_length: int = 1800) -> str:
     """Create a relevant preview of content around query terms with adaptive length."""
     # Adaptive length based on content type
-    if any(keyword in content.lower() for keyword in ['tutorial', 'guide', 'workflow', 'step', 'example']):
+    if any(
+        keyword in content.lower()
+        for keyword in ["tutorial", "guide", "workflow", "step", "example"]
+    ):
         max_length = 2200  # Longer for tutorials/guides
-    elif any(keyword in content.lower() for keyword in ['command', 'syntax', 'reference']):
+    elif any(
+        keyword in content.lower() for keyword in ["command", "syntax", "reference"]
+    ):
         max_length = 1400  # Shorter for command references
-    
+
     if len(content) <= max_length:
         return content
 
@@ -96,18 +101,32 @@ app = FastMCP("Python Dependency Manager Companion")
 
 
 @app.tool
-def search_py_dep_manager_docs(
-    query: Annotated[str, Field(description="Search intent: 'workflow tutorial', 'command reference', 'best practices', 'troubleshooting', or 'comparison'")],
+def search_py_dep_man_docs(
+    query: Annotated[
+        str,
+        Field(
+            description="Search intent: 'workflow tutorial', 'command reference', 'best practices', 'troubleshooting', or 'comparison'"
+        ),
+    ],
     package_filter: Annotated[
-        Literal["pip", "conda", "poetry", "uv"] | None, 
-        Field(description="Focus on specific tool when comparing or learning tool-specific workflows")
+        Literal["pip", "conda", "poetry", "uv"] | None,
+        Field(
+            description="Focus on specific tool when comparing or learning tool-specific workflows"
+        ),
     ] = None,
-    top_n: Annotated[int, Field(description="Number of top results to return - use more (7-10) for broad/ambiguous requests, fewer (3-5) for specific questions", ge=1, le=10)] = 5
+    top_n: Annotated[
+        int,
+        Field(
+            description="Number of top results to return - use more (7-10) for broad/ambiguous requests, fewer (3-5) for specific questions",
+            ge=1,
+            le=10,
+        ),
+    ] = 5,
 ) -> str:
     """Find comprehensive answers from latest official Python dependency manager documentation.
-    
+
     🎯 CORE VALUE: Access to authoritative, up-to-date official docs that general knowledge can't provide.
-    
+
     ⚡ EXECUTION STRATEGY (85%+ first-call success):
     - MANDATORY: Multi-call progress report format:
       ```markdown
@@ -122,26 +141,26 @@ def search_py_dep_manager_docs(
     - ENFORCEMENT: Show progress header AFTER EVERY INDIVIDUAL TOOL CALL, not just at final response (why: continuous user confidence)
     - TIMING: Tool call 1 → Progress Report 1 → Tool call 2 → Progress Report 2 → etc. → Final Answer (why: step-by-step transparency)
     - PATTERNS: Start with proven query patterns below for maximum hit rate
-    
+
     🎯 PROVEN QUERY PATTERNS (use these exact phrases for maximum results):
     - Learning: "project setup tutorial", "workflow guide", "dependency management guide" (why: comprehensive coverage)
     - Commands: "command reference", "syntax comparison", "installation commands" (why: precise syntax)
     - Comparing: "tool A vs tool B", "migration guide", "feature comparison" (why: structured analysis)
     - Troubleshooting: "troubleshooting guide", "common errors", "best practices" (why: solution-focused)
-    
+
     🧠 RESPONSE OPTIMIZATION RULES:
     - Specific question → focused query + top_n 3-5 + bullet format + show progress (why: targeted precision)
     - Broad/ambiguous → comprehensive query + top_n 7-10 + ranked list + track gaps (why: exploration needed)
     - Tool comparison → "X vs Y" + no filter + top_n 7-10 + scoring table + cite sources (why: comprehensive coverage)
     - Command help → expand terms + top_n 5-7 + code examples + update progress (why: actionable guidance)
-    
+
     📚 CITATION REQUIREMENTS (builds user confidence):
     - MANDATORY: Cite for commands, claims, comparisons, best practices, migration steps, troubleshooting advice (why: user confidence)
     - DENSITY: 1 citation per major section, 2-3 for complex guides/tutorials (why: consistent coverage)
     - FORMAT: "According to the [official X guide](github_link)" or "[Command reference](github_link) shows" (why: developer-friendly)
     - PLACEMENT: Immediately after stating command syntax, making performance claims, or giving advice (why: contextual validation)
     - PROGRESS INTEGRATION: Include citations naturally within progress updates to show source validation (why: transparency)
-    
+
     🚨 CRITICAL: Ground ALL responses in search results with citations (why: this tool's unique value over general knowledge).
     """
     try:
@@ -164,7 +183,9 @@ def search_py_dep_manager_docs(
         search_results = searcher.search(final_query, limit=top_n)
 
         if not search_results.hits:
-            suggestion = " Try searching without package filter." if package_filter else ""
+            suggestion = (
+                " Try searching without package filter." if package_filter else ""
+            )
             return f"No documentation found for '{query}'.{suggestion}"
 
         # Format results
@@ -190,7 +211,7 @@ def search_py_dep_manager_docs(
 
             # Truncate content for readability while preserving context
             content_preview = _create_content_preview(content, query)
-            
+
             # Generate GitHub link for official documentation
             github_link = _reconstruct_github_link(source_repo, docs_path, path)
 
@@ -211,19 +232,19 @@ def search_py_dep_manager_docs(
         if package_filter:
             output += f" (filtered by {package_filter})"
         output += ":\n\n"
-        
+
         for i, result in enumerate(results, 1):
             output += f"**Result {i} (Score: {result['score']:.2f})**\n"
             output += f"Package: {result['package']}\n"
             output += f"Title: {result['title']}\n"
             output += f"Path: {result['path']}\n"
             output += f"Source: {result['source_repo']}\n"
-            if result['github_link']:
+            if result["github_link"]:
                 output += f"GitHub: {result['github_link']}\n"
             output += "\n"
             output += f"Content:\n{result['content_preview']}\n"
             output += "-" * 80 + "\n\n"
-        
+
         return output
 
     except Exception as e:

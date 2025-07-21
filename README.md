@@ -2,7 +2,7 @@
 
 > Updated on 2025-07-15 by @KemingHe
 
-Local MCP server providing unified search across Python dependency manager documentation.
+Local stdio MCP server providing unified search across Python dependency managers' latest and official documentation.
 
 ## 📋 Overview
 
@@ -18,7 +18,7 @@ docker pull keminghe/py-dep-man-companion:latest
 
 ### Step 2: Configure Your IDE
 
-Add to VSCode User Settings (JSON):
+Add to VSCode/Cursor `mcp.json`:
 
 ```json
 {
@@ -35,31 +35,35 @@ Add to VSCode User Settings (JSON):
 
 ### Step 3: Start Searching
 
-Query latest and unified documentation across all supported Python dependency managers directly from your AI assistant.
+Query latest and unified documentation across all supported Python dependency managers directly within your agentic chat.
 
 ## 📁 Project Structure
 
 ```plaintext
 python-dep-manager-companion-mcp-server/
-├── .github/workflows/        # Automation workflows (see workflows/README.md)
-├── docs/                     # Project documentation
+├── .github/workflows/            # Automation workflows
+│   ├── auto-update-docs.yml      # Weekly docs update
+│   ├── auto-update-index.yml     # Search index rebuild
+│   ├── auto-update-publish.yml   # Multi-arch Docker publish
+│   ├── auto-update.yml           # Combined automation
+│   └── README.md                 # Workflow documentation
 ├── src/
-│   ├── server.py             # FastMCP server implementation
-│   ├── index.py              # Tantivy search engine
-│   └── assets/               # Auto-updated documentation files
+│   ├── assets/               # Documentation source files
+│   │   ├── conda/            # conda docs  
+│   │   ├── pip/              # pip docs
+│   │   ├── poetry/           # poetry docs
+│   │   └── uv/               # uv docs
+│   ├── index/                # Pre-built search index
+│   ├── build_index.py        # Tantivy index builder
+│   └── mcp_server.py         # FastMCP stdio server
 ├── Dockerfile                # Container build configuration
-└── pyproject.toml            # Project dependencies and metadata
+├── pyproject.toml            # Project dependencies and metadata
+└── uv.lock                   # Locked dependencies
 ```
 
 ## 🛠️ Development
 
-**Transport Support**: Stdio (default) and HTTP modes following MCP standards.
-
-**Environment Variables**:
-
-- `TRANSPORT_MODE`: `stdio` or `http` (default: `stdio`)
-- `TRANSPORT_PORT`: HTTP server port (default: `8080`)
-- `TRANSPORT_HOST`: Host binding (default: `127.0.0.1`)
+**Transport**: Stdio only (MCP standard for local tools).
 
 **Local Development**:
 
@@ -69,8 +73,11 @@ git clone <repo-url>
 cd python-dep-manager-companion-mcp-server
 uv sync
 
-# Run server
-uv run python src/server.py stdio
+# Run server locally
+uv run --with fastmcp --with tantivy fastmcp run src/mcp_server.py
+
+# Build Docker image
+docker build -t py-dep-man-companion .
 ```
 
 **Roadmap**: Adding support for pipenv, pdm, pixi, and additional Python package managers.

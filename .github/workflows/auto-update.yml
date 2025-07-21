@@ -20,7 +20,11 @@ jobs:
       contents: write
     uses: ./.github/workflows/auto-update-index.yml
     
-  # build-deploy:
-  #   name: Build and Deploy
+  # publish:
+  #   name: Publish Image
   #   needs: update-index
-  #   uses: ./.github/workflows/auto-build-and-deploy.yml
+  #   permissions:
+  #     contents: read
+  #     attestations: write
+  #     id-token: write
+  #   uses: ./.github/workflows/auto-update-publish.yml

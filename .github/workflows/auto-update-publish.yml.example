@@ -1,0 +1,79 @@
+name: Publish Image to Docker Hub
+
+on:
+  workflow_call: {}
+  workflow_dispatch: {} # Manual trigger for testing
+
+env:
+  # Docker requires lowercase names for both images and cache references
+  IMAGE_NAME: py-dep-man-companion
+  REPO_NAME: ${{ vars.DOCKERHUB_USERNAME }}/py-dep-man-companion
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  build-and-push-image:
+    if: github.repository == 'KemingHe/python-dependency-manager-companion-mcp-server'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      attestations: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Log in to Docker Hub
+        # Pinned 3rd party action to commit hash of release v3.3.0 on 08/15/2024 to prevent supply chain attacks
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PAT }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        # Pinned 3rd party action to commit hash of release v5.5.1 on 01/23/2024 to prevent supply chain attacks
+        uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81
+        with:
+          images: ${{ env.REPO_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=schedule,pattern=weekly-{{date 'YYYYMMDD'}}
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      # Add support for more platforms, i.e. linux/arm64 (macOS M1/M2) with QEMU
+      - name: Set up QEMU
+        # Pinned 3rd party action to commit hash of release v3.2.0 on 08/15/2024 to prevent supply chain attacks
+        uses: docker/setup-qemu-action@49b3bc8e6bdd4a60e6116a5414239cba5943d3cf
+
+      # Enable advanced build features like cache export
+      - name: Set up Docker Buildx
+        # Pinned 3rd party action to commit hash of release v3.6.1 on 08/15/2024 to prevent supply chain attacks
+        uses: docker/setup-buildx-action@988b5a0280414f521da01fcc63a27aeeb4b104db
+        
+      - name: Build and push Docker image
+        id: push
+        # Pinned 3rd party action to commit hash of release v6.7.0 on 08/15/2024 to prevent supply chain attacks
+        uses: docker/build-push-action@16ebe778df0e7752d2cfcbd924afdbbd89c1a755
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            BUILD_DATE=${{ github.event.head_commit.timestamp }}
+            VCS_REF=${{ github.sha }}
+
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: index.docker.io/${{ env.REPO_NAME }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true

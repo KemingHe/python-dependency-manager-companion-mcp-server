@@ -12,21 +12,22 @@ graph LR
     ORCHESTRATOR["🎯 Orchestrator<br/>auto-update.yml"]
     UPDATE_DOCS["📚 Documentation Sync<br/>auto-update-docs.yml"]
     UPDATE_INDEX["🔍 Search Index<br/>auto-update-index.yml"]
+    PUBLISH["🐳 Publish Image<br/>auto-update-publish.yml"]
 
     CRON_TRIGGER --> ORCHESTRATOR
     ORCHESTRATOR --> UPDATE_DOCS
     UPDATE_DOCS --> UPDATE_INDEX
+    UPDATE_INDEX --> PUBLISH
 ```
 
-**Security**: Pinned action hashes, signed commits, sequential execution
+**Security**: Pinned 3rd-party actions, signed commits, modular execution
 
 ## 🚀 Planned Extensions
 
-- **Workflows**: `auto-build-and-deploy.yml` (Docker)
 - **Managers**: pipenv, pdm, pixi
 - **Features**: Conditional updates, performance monitoring
 
 ## 🔧 Operations
 
-- **Testing**: `workflow_dispatch` on all workflows  
+- **Testing**: `workflow_dispatch` on `update-docs`, `update-index`, and `publish`
 - **Monitoring**: Check Tuesday runs for upstream changes

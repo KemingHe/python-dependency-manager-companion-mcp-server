@@ -1,12 +1,12 @@
 [project]
-name = "python-dep-manager-companion-mcp-server"
+name = "py_dep_man_companion"
 version = "0.1.0"
-description = "Local MCP server providing unified search across Python dependency manager documentation"
+description = "Local stdio MCP server providing unified search across Python dependency managers' latest and official documentation."
 readme = "README.md"
 license = {file = "LICENSE"}
 requires-python = ">=3.12"
-urls.repository = "https://github.com/KemingHe/python-dep-manager-companion-mcp-server"
-urls.issues = "https://github.com/KemingHe/python-dep-manager-companion-mcp-server/issues"
+urls.repository = "https://github.com/KemingHe/python-dependency-manager-companion-mcp-server"
+urls.issues = "https://github.com/KemingHe/python-dependency-manager-companion-mcp-server/issues"
 dependencies = [
     "fastmcp>=2.10.5",
     "tantivy>=0.24.0",

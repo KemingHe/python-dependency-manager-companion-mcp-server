@@ -133,6 +133,7 @@ def build_index():
     if INDEX_DIR.exists():
         logger.info(f"Removing existing index at {INDEX_DIR}")
         import shutil
+
         shutil.rmtree(INDEX_DIR)
 
     # Create index directory

@@ -7,6 +7,7 @@ on:
 jobs:
   update-index:
     name: Update Search Index
+    if: github.repository == 'KemingHe/python-dependency-manager-companion-mcp-server'
     runs-on: ubuntu-latest
     permissions:
       contents: write
