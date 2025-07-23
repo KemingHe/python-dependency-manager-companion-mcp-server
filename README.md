@@ -1,6 +1,6 @@
-# Python Dependency Manager MCP Server
+# Python Dependency Manager Companion MCP Server
 
-> Updated on 2025-07-21 by @KemingHe
+> Updated on 2025-07-21 by [@KemingHe](https://github.com/KemingHe)
 
 Local stdio MCP server providing unified search across Python dependency managers' latest and official documentation. [[Demo]](https://www.loom.com/share/a80f6041dc374c07b95b2397ee4e8ca1?sid=1209cdce-7239-447e-8b20-49eae454cc9a)
 
