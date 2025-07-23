@@ -2,11 +2,19 @@
 
 > Updated on 2025-07-23 by @KemingHe
 
-Thank you for your interest in contributing! This document provides development setup instructions and guidelines.
+Thank you for your interest in contributing! This guide covers development workflow and setup.
+
+## 🔄 Contribution Workflow
+
+**Issue-first approach**: No issue, no PR. No PR, no merge.
+
+1. **Raise issue** - Bug report or feature request
+2. **Get assigned** - Wait for maintainer assignment  
+3. **Create PR** - Link to assigned issue
+4. **Review & approval** - Address feedback
+5. **Merge** - Maintainer merges approved PR
 
 ## 🛠️ Development Setup
-
-**Transport**: Stdio only (MCP standard for local tools).
 
 ### Local Development
 
@@ -16,19 +24,19 @@ git clone <repo-url>
 cd python-dep-manager-companion-mcp-server
 uv sync
 
-# Run server locally
+# Run server locally  
 uv run --with fastmcp --with tantivy fastmcp run src/mcp_server.py
 
 # Build Docker image
 docker build -t py-dep-man-companion .
 ```
 
-### Local Testing with MCP Client
+### Local Testing
 
-For testing the server locally during development, add this configuration to your VSCode/Cursor `mcp.json`:
+Add to your VSCode/Cursor's `mcp.json` for testing:
 
->[!IMPORTANT]
-> Replace `/path/to/your/python-dependency-manager-companion-mcp-server` with the absolute path to your local repository.
+> [!IMPORTANT]
+> Replace `/path/to/your/repo` with your local repository path.
 
 ```json
 {
@@ -37,16 +45,9 @@ For testing the server locally during development, add this configuration to you
       "py-dep-man-companion-native": {
         "command": "uv",
         "args": [
-          "run",
-          "--directory",
-          "/path/to/your/python-dependency-manager-companion-mcp-server",
-          "--with",
-          "fastmcp>=2.10.5",
-          "--with",
-          "tantivy>=0.24.0",
-          "fastmcp",
-          "run",
-          "src/mcp_server.py"
+          "run", "--directory", "/path/to/your/repo",
+          "--with", "fastmcp>=2.10.5", "--with", "tantivy>=0.24.0",
+          "fastmcp", "run", "src/mcp_server.py"
         ]
       }
     }
@@ -54,22 +55,20 @@ For testing the server locally during development, add this configuration to you
 }
 ```
 
-## 📝 Development Guidelines
+## 📝 Development Standards
 
-- Follow existing code style and structure
-- Test your changes locally using the native configuration above
-- Update documentation when adding new features
-- Submit pull requests with clear descriptions of changes
+### Git Workflow
 
-### Git Workflow & Branching
-
-- **Branching pattern**: `type/feature-or-bug-scope/GitHubUsername`
+- **Branching**: `type/feature-or-bug-scope/GitHubUsername`
 - **Types**: `feat`, `fix`, `docs`, `test`, `refactor`, `chore`
+- **Commits**: Use `prompts/prompt-commit-msg-gen.md` for consistency
 
-### Prompts for AI-Assisted Development
+### Quality Tools
+
+Available templates and prompts for consistent contributions:
 
 > [!TIP]
-> This project includes AI prompts and GitHub templates for consistent, high-quality contributions:
+> Use these tools for consistent, high-quality contributions that reduce review cycles.
 
 ```plaintext
 .github/
@@ -77,7 +76,7 @@ For testing the server locally during development, add this configuration to you
 │   ├── bug-report.md             # Bug report template
 │   └── feature-request.md        # Feature request template
 └── PULL_REQUEST_TEMPLATE/
-    └── pull_request_template.md  # PR template with checklist
+    └── pull_request_template.md
 
 prompts/
 ├── prompt-commit-msg-gen.md      # Generate uniform commit messages
@@ -86,12 +85,12 @@ prompts/
 └── prompt-readme-gen.md          # Maintain documentation standards
 ```
 
-## 🔄 Automated Updates
+## 🤖 Automated Systems
 
-This repository includes automated workflows that:
+The repository auto-updates weekly (Tuesday 6pm ET):
 
-1. Update documentation weekly from official sources
-2. Rebuild search indexes automatically
-3. Publish multi-architecture Docker images
+1. Syncs official documentation
+2. Rebuilds search indexes
+3. Publishes Docker images
 
-See [.github/workflows/README.md](.github/workflows/README.md) for workflow details.
+See [.github/workflows/README.md](.github/workflows/README.md) for technical details.
