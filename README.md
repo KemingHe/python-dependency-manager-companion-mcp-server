@@ -33,7 +33,7 @@ docker pull keminghe/py-dep-man-companion:latest
 
 **Use as template**: [[Create from template]](https://github.com/new?template_name=python-dependency-manager-companion-mcp-server&template_owner=KemingHe) for your own MCP server projects.
 
-**Contribute back**: Fork and see [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup.
+**Contribute back**: Fork and follow [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup.
 
 ## 🔄 Auto-Update Architecture
 
