@@ -1,6 +1,6 @@
 # Contributing to Python Dependency Manager MCP Server
 
-> Updated on 2025-07-21 by @KemingHe
+> Updated on 2025-07-23 by @KemingHe
 
 Thank you for your interest in contributing! This document provides development setup instructions and guidelines.
 
@@ -27,6 +27,9 @@ docker build -t py-dep-man-companion .
 
 For testing the server locally during development, add this configuration to your VSCode/Cursor `mcp.json`:
 
+>[!IMPORTANT]
+> Replace `/path/to/your/python-dependency-manager-companion-mcp-server` with the absolute path to your local repository.
+
 ```json
 {
   "mcp": {
@@ -51,13 +54,6 @@ For testing the server locally during development, add this configuration to you
 }
 ```
 
->[!IMPORTANT]
-> Replace `/path/to/your/python-dependency-manager-companion-mcp-server` with the absolute path to your local repository.
-
-## 🗺️ Roadmap
-
-Adding support for pipenv, pdm, pixi, and additional Python package managers.
-
 ## 📝 Development Guidelines
 
 - Follow existing code style and structure
@@ -65,12 +61,37 @@ Adding support for pipenv, pdm, pixi, and additional Python package managers.
 - Update documentation when adding new features
 - Submit pull requests with clear descriptions of changes
 
+### Git Workflow & Branching
+
+- **Branching pattern**: `type/feature-or-bug-scope/GitHubUsername`
+- **Types**: `feat`, `fix`, `docs`, `test`, `refactor`, `chore`
+
+### Prompts for AI-Assisted Development
+
+> [!TIP]
+> This project includes AI prompts and GitHub templates for consistent, high-quality contributions:
+
+```plaintext
+.github/
+├── ISSUE_TEMPLATE/
+│   ├── bug-report.md             # Bug report template
+│   └── feature-request.md        # Feature request template
+└── PULL_REQUEST_TEMPLATE/
+    └── pull_request_template.md  # PR template with checklist
+
+prompts/
+├── prompt-commit-msg-gen.md      # Generate uniform commit messages
+├── prompt-issue-gen.md           # Create well-structured issues
+├── prompt-pull-request-gen.md    # Write comprehensive PR descriptions
+└── prompt-readme-gen.md          # Maintain documentation standards
+```
+
 ## 🔄 Automated Updates
 
 This repository includes automated workflows that:
 
-- Update documentation weekly from official sources
-- Rebuild search indexes automatically
-- Publish multi-architecture Docker images
+1. Update documentation weekly from official sources
+2. Rebuild search indexes automatically
+3. Publish multi-architecture Docker images
 
 See [.github/workflows/README.md](.github/workflows/README.md) for workflow details.

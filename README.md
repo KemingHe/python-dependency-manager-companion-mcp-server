@@ -1,30 +1,18 @@
 # Python Dependency Manager Companion MCP Server
 
-> Updated on 2025-07-21 by [@KemingHe](https://github.com/KemingHe)
+> README updated on 2025-07-23 by [@KemingHe](https://github.com/KemingHe)
 
-Local stdio MCP server providing unified search across Python dependency managers' latest and official documentation. [[Demo]](https://www.loom.com/share/a80f6041dc374c07b95b2397ee4e8ca1?sid=1209cdce-7239-447e-8b20-49eae454cc9a)
+Official docs from pip, poetry, uv, and conda + automated weekly updates = zero maintenance overhead for developers using VSCode/Cursor with AI assistants. [[Demo]](https://www.loom.com/share/a80f6041dc374c07b95b2397ee4e8ca1?sid=1209cdce-7239-447e-8b20-49eae454cc9a)
 
-## 📋 Overview
+## 🚀 Quick Start for Agentic IDEs
 
-Unified search for pip, poetry, uv, and conda docs via Docker with automated weekly updates. Built with FastMCP and Tantivy for simple, accurate, embedding-free, full-text search.
-
-## 🎯 Use as Template
-
-**General use**: [[Use this repository as a template]](https://github.com/new?template_name=python-dependency-manager-companion-mcp-server&template_owner=KemingHe) for your own MCP server projects.
-
-**Contributing**: Fork to contribute back. See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup.
-
-## 🚀 Getting Started
-
-### Step 1: Pull Docker Image
+**1. Pull latest Docker image**:
 
 ```shell
 docker pull keminghe/py-dep-man-companion:latest
 ```
 
-### Step 2: Configure Your IDE
-
-Add to VSCode/Cursor `mcp.json`:
+**2. Add to your IDE's `mcp.json`**:
 
 ```json
 {
@@ -39,9 +27,35 @@ Add to VSCode/Cursor `mcp.json`:
 }
 ```
 
-### Step 3: Start Searching
+**3. Query official docs directly in your AI chat** - guaranteed fresh from weekly automated updates.
 
-Query latest and unified documentation across all supported Python dependency managers directly within your agentic chat.
+## 🤝 Contributing
+
+**Use as template**: [[Create from template]](https://github.com/new?template_name=python-dependency-manager-companion-mcp-server&template_owner=KemingHe) for your own MCP server projects.
+
+**Contribute back**: Fork and see [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup.
+
+## 🔄 Auto-Update Architecture
+
+```mermaid
+graph LR
+    WEEKLY["⏰ Every Tuesday 06:00pm ET"]
+    DOCS["📚 Sync Official Docs"]
+    INDEX["🔍 Rebuild Search Index"]
+    DOCKER["🐳 Publish Latest Image"]
+    
+    WEEKLY --> DOCS
+    DOCS --> INDEX
+    INDEX --> DOCKER
+```
+
+**Zero maintenance**: Documentation automatically synced weekly from official sources. Docker `:latest` tag guarantees you always get current docs without manual updates.
+
+## 🗺️ Roadmap
+
+- [ ] Add support for pipenv, pdm, pixi
+- [ ] Add comprehensive tests with 100% coverage  
+- [ ] Add indexing support for PDF and CSV files
 
 ## 📁 Project Structure
 
@@ -73,4 +87,4 @@ This project is licensed under the [MIT License](./LICENSE) - a permissive licen
 
 ## 📞 Support
 
-Open GitHub issues for bug reports and feature requests. Documentation is automatically updated weekly via workflows (see [.github/workflows/README.md](./.github/workflows/README.md)).
+Open a [GitHub issue](https://github.com/KemingHe/python-dependency-manager-companion-mcp-server/issues) for bug reports and feature requests.
