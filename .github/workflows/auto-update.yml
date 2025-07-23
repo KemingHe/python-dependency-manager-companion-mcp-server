@@ -34,3 +34,4 @@ jobs:
       attestations: write  # Required: artifact attestation
       id-token: write      # Required: OIDC token for attestation
     uses: ./.github/workflows/auto-update-publish.yml
+    secrets: inherit       # Required for workflow accessing env secrets

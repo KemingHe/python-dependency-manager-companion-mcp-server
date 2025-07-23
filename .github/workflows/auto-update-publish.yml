@@ -1,7 +1,10 @@
 name: Publish Image to Docker Hub
 
 on:
-  workflow_call: {}
+  workflow_call:
+    secrets:
+      DOCKERHUB_TOKEN:
+        required: true
   workflow_dispatch: {} # Manual trigger for testing
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
