@@ -2,7 +2,7 @@
 
 > README updated on 2025-07-23 by [@KemingHe](https://github.com/KemingHe)
 
-Official docs from pip, poetry, uv, and conda + automated weekly updates = zero maintenance overhead for developers using VSCode/Cursor with AI assistants. [[Demo]](https://www.loom.com/share/a80f6041dc374c07b95b2397ee4e8ca1?sid=1209cdce-7239-447e-8b20-49eae454cc9a)
+Official docs from `pip`, `poetry`, `uv`, and `conda` + automated weekly updates = zero maintenance overhead for developers using VSCode/Cursor with AI assistants. [[Demo]](https://www.loom.com/share/a80f6041dc374c07b95b2397ee4e8ca1?sid=1209cdce-7239-447e-8b20-49eae454cc9a)
 
 ## 🚀 Quick Start for Agentic IDEs
 
@@ -53,7 +53,7 @@ graph LR
 
 ## 🗺️ Roadmap
 
-- [ ] Add support for pipenv, pdm, pixi
+- [ ] Add support for `pipenv`, `pdm`, `pixi`
 - [ ] Add comprehensive tests with 100% coverage  
 - [ ] Add indexing support for PDF and CSV files
 
