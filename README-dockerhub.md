@@ -2,13 +2,18 @@
 
 > README updated on 2025-07-23 by [@KemingHe](https://github.com/KemingHe)
 
-Official docs from `pip`, `poetry`, `uv`, and `conda` + automated weekly updates = zero maintenance overhead for developers using VSCode/Cursor with AI assistants. [[Demo]](https://www.loom.com/share/a80f6041dc374c07b95b2397ee4e8ca1?sid=1209cdce-7239-447e-8b20-49eae454cc9a)
+Stop getting out-of-date Python package manager commands from your AI. Cross-reference latest official `pip`, `poetry`, `uv`, and `conda` docs with auto-updates. [[Demo]](https://www.loom.com/share/a80f6041dc374c07b95b2397ee4e8ca1?sid=1209cdce-7239-447e-8b20-49eae454cc9a)
 
 ## 🚀 Quick Start for Agentic IDEs
 
-**1. Pull latest Docker image**:
+**1. Pull Docker image**:
 
 ```shell
+# Pin to specific commit hash for production security
+# See https://hub.docker.com/r/keminghe/py-dep-man-companion/tags
+docker pull keminghe/py-dep-man-companion:sha256-...
+
+# Or use latest for development  
 docker pull keminghe/py-dep-man-companion:latest
 ```
 
@@ -27,29 +32,14 @@ docker pull keminghe/py-dep-man-companion:latest
 }
 ```
 
-**3. Query official docs directly in your AI chat** - guaranteed fresh from weekly automated updates.
+**3. Ask package manager questions** - "How to migrate a `conda` project to `uv`?" and get accurate, current official syntax.
 
 ## 🔄 Auto-Update Architecture
 
-```plaintext
-┌───────────────────────────┐
-│  ⏰ Every Tuesday 6pm ET  │
-└─────────────┬─────────────┘
-              ▼
-┌───────────────────────────┐
-│  📚 Sync Official Docs    │
-└─────────────┬─────────────┘
-              ▼
-┌───────────────────────────┐
-│  🔍 Rebuild Search Index  │
-└─────────────┬─────────────┘
-              ▼
-┌───────────────────────────┐
-│  🐳 Publish Latest Image  │
-└───────────────────────────┘
-```
-
-**Zero maintenance**: Documentation automatically synced weekly from official sources. Docker `:latest` tag guarantees you always get current docs without manual updates.
+1. ⏰ **Every Tuesday 6pm ET**
+2. 📚 **Sync Official Docs**
+3. 🔍 **Rebuild Search Index**
+4. 🐳 **Publish Latest Image**
 
 ## 🤝 Contributing
 
