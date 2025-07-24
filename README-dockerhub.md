@@ -13,7 +13,7 @@ Stop getting out-of-date Python package manager commands from your AI. Cross-ref
 # See https://hub.docker.com/r/keminghe/py-dep-man-companion/tags
 docker pull keminghe/py-dep-man-companion@sha256:2c896dc617e8cd3b1a1956580322b0f0c80d5b6dfd09743d90859d2ef2b71ec6
 
-# Or use latest for development  
+# Or use latest for development
 docker pull keminghe/py-dep-man-companion:latest
 ```
 
