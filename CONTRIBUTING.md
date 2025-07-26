@@ -36,13 +36,13 @@ docker build -t py-dep-man-companion .
 Add to your VSCode/Cursor's `mcp.json` for testing:
 
 > [!IMPORTANT]
-> Replace `/path/to/your/repo` with your local repository path.
+> Replace `/path/to/your/repo` with **absolute path** to your local repository.
 
 ```json
 {
   "mcp": {
     "servers": {
-      "py-dep-man-companion-native": {
+      "py-dep-man-companion-development": {
         "command": "uv",
         "args": [
           "run", "--directory", "/path/to/your/repo",
