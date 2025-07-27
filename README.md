@@ -2,7 +2,11 @@
 
 > README updated on 2025-07-23 by [@KemingHe](https://github.com/KemingHe)
 
-Stop getting out-of-date Python package manager commands from your AI. Cross-reference latest official `pip`, `poetry`, `uv`, and `conda` docs with auto-updates. [[Demo]](https://www.loom.com/share/a80f6041dc374c07b95b2397ee4e8ca1?sid=1209cdce-7239-447e-8b20-49eae454cc9a)
+Stop getting out-of-date Python package manager commands from your AI. Cross-reference latest official `pip`, `poetry`, `uv`, and `conda` docs with auto-updates.
+
+**Click to play demo**:
+
+[![Watch Demo](./docs/assets/py-dep-man-companion-demo-thumbnail.png)](./docs/assets/2025-07-27-demo.mp4)
 
 ## 🚀 Quick Start for Agentic IDEs
 
@@ -25,7 +29,7 @@ docker pull keminghe/py-dep-man-companion:latest
     "servers": {
       "python-deps": {
         "command": "docker",
-        "args": ["run", "-i", "--rm", "keminghe/py-dep-man-companion:latest"]
+        "args": ["run", "-i", "--rm", "keminghe/py-dep-man-companion"]
       }
     }
   }
@@ -42,17 +46,10 @@ docker pull keminghe/py-dep-man-companion:latest
 
 ## 🔄 Auto-Update Architecture
 
-```mermaid
-graph LR
-    WEEKLY["⏰ Every Tuesday 06:00pm ET"]
-    DOCS["📚 Sync Official Docs"]
-    INDEX["🔍 Rebuild Search Index"]
-    DOCKER["🐳 Publish Latest Image"]
-    
-    WEEKLY --> DOCS
-    DOCS --> INDEX
-    INDEX --> DOCKER
-```
+1. ⏰ **Every Tuesday 6pm ET**
+2. 📚 **Sync Official Docs**
+3. 🔍 **Rebuild Search Index**
+4. 🐳 **Publish Latest Image**
 
 ## 🗺️ Roadmap
 

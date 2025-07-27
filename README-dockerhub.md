@@ -1,8 +1,8 @@
 # Python Dependency Manager Companion MCP Server
 
-> README updated on 2025-07-23 by [@KemingHe](https://github.com/KemingHe)
+> README updated on 2025-07-27 by [@KemingHe](https://github.com/KemingHe)
 
-Stop getting out-of-date Python package manager commands from your AI. Cross-reference latest official `pip`, `poetry`, `uv`, and `conda` docs with auto-updates. [[Demo]](https://www.loom.com/share/a80f6041dc374c07b95b2397ee4e8ca1?sid=1209cdce-7239-447e-8b20-49eae454cc9a)
+Stop getting out-of-date Python package manager commands from your AI. Cross-reference latest official `pip`, `poetry`, `uv`, and `conda` docs with auto-updates. [[Watch Demo]](https://github.com/KemingHe/python-dependency-manager-companion-mcp-server/blob/main/docs/assets/2025-07-27-demo.mp4)
 
 ## 🚀 Quick Start for Agentic IDEs
 
@@ -25,7 +25,7 @@ docker pull keminghe/py-dep-man-companion:latest
     "servers": {
       "python-deps": {
         "command": "docker",
-        "args": ["run", "-i", "--rm", "keminghe/py-dep-man-companion:latest"]
+        "args": ["run", "-i", "--rm", "keminghe/py-dep-man-companion"]
       }
     }
   }
