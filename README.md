@@ -2,11 +2,7 @@
 
 > README updated on 2025-07-27 by [@KemingHe](https://github.com/KemingHe)
 
-Stop getting out-of-date Python package manager commands from your AI. Cross-reference latest official `pip`, `poetry`, `uv`, and `conda` docs with auto-updates.
-
-**Click to play demo**:
-
-[![Watch Demo](./docs/assets/py-dep-man-companion-demo-thumbnail.png)](./docs/assets/2025-07-27-demo.mp4)
+Stop getting out-of-date Python package manager commands from your AI. Cross-reference latest official `pip`, `poetry`, `uv`, and `conda` docs with auto-updates. [[Watch Demo on YouTube]](https://youtu.be/3nVp46Q8FdY)
 
 ## 🚀 Quick Start for Agentic IDEs
 
