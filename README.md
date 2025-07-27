@@ -1,6 +1,6 @@
 # Python Dependency Manager Companion MCP Server
 
-> README updated on 2025-07-23 by [@KemingHe](https://github.com/KemingHe)
+> README updated on 2025-07-27 by [@KemingHe](https://github.com/KemingHe)
 
 Stop getting out-of-date Python package manager commands from your AI. Cross-reference latest official `pip`, `poetry`, `uv`, and `conda` docs with auto-updates.
 
