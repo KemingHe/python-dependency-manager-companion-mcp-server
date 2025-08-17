@@ -6,7 +6,8 @@ Thank you for your interest in contributing! This guide covers development workf
 
 ## 🔄 Contribution Workflow
 
-**Issue-first approach**: No issue, no PR. No PR, no merge.
+> [!IMPORTANT]
+> **Issue-first approach**: No issue, no PR. No PR, no merge.
 
 1. **Raise issue** - Bug report or feature request
 2. **Get assigned** - Wait for maintainer assignment  
@@ -75,8 +76,7 @@ Available templates and prompts for consistent contributions:
 ├── ISSUE_TEMPLATE/
 │   ├── bug-report.md             # Bug report template
 │   └── feature-request.md        # Feature request template
-└── PULL_REQUEST_TEMPLATE/
-    └── pull_request_template.md
+└── pull_request_template.md
 
 prompts/
 ├── prompt-commit-msg-gen.md      # Generate uniform commit messages
@@ -87,7 +87,7 @@ prompts/
 
 ## 🤖 Automated Systems
 
-The repository auto-updates weekly (Tuesday 6pm ET):
+The repository auto-updates weekly (Tuesday 06:00pm ET):
 
 1. Syncs official documentation
 2. Rebuilds search indexes

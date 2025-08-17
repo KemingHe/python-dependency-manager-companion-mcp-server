@@ -1,8 +1,9 @@
 # Python Dependency Manager Companion MCP Server
 
-> README updated on 2025-07-27 by [@KemingHe](https://github.com/KemingHe)
+> [!NOTE]  
+> **🚀 Major Update**: Now supports **6 Python package managers**! Added `pixi` and `pdm` with full auto-updating documentation alongside existing `pip`, `conda`, `poetry`, and `uv` support.
 
-Stop getting out-of-date Python package manager commands from your AI. Cross-reference latest official `pip`, `poetry`, `uv`, and `conda` docs with auto-updates. [[Watch Demo on YouTube]](https://youtu.be/3nVp46Q8FdY)
+Stop getting out-of-date Python package manager commands from your AI. Cross-reference latest official [`pip`](https://pip.pypa.io/), [`conda`](https://docs.conda.io/projects/conda), [`poetry`](https://python-poetry.org/), [`uv`](https://docs.astral.sh/uv/), [`pixi`](https://pixi.sh/), and [`pdm`](https://pdm-project.org/) docs with auto-updates. [[Watch Demo on YouTube]](https://youtu.be/3nVp46Q8FdY)
 
 ## 🚀 Quick Start for Agentic IDEs
 
@@ -49,7 +50,7 @@ docker pull keminghe/py-dep-man-companion:latest
 
 ## 🗺️ Roadmap
 
-- [ ] Add support for `pipenv`, `pdm`, `pixi`
+- [x] Added support for `pixi` and `pdm` in version 0.1.1
 - [ ] Add comprehensive tests with 100% coverage  
 - [ ] Add indexing support for PDF and CSV files
 

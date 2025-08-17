@@ -24,6 +24,10 @@ jobs:
             repo: pypa/pip
             docs_path: docs
             target_dir: src/assets/pip
+          - manager: conda
+            repo: conda/conda
+            docs_path: docs
+            target_dir: src/assets/conda
           - manager: poetry
             repo: python-poetry/poetry
             docs_path: docs
@@ -32,10 +36,14 @@ jobs:
             repo: astral-sh/uv
             docs_path: docs
             target_dir: src/assets/uv
-          - manager: conda
-            repo: conda/conda
+          - manager: pixi
+            repo: prefix-dev/pixi
             docs_path: docs
-            target_dir: src/assets/conda
+            target_dir: src/assets/pixi
+          - manager: pdm
+            repo: pdm-project/pdm
+            docs_path: docs
+            target_dir: src/assets/pdm
     
     steps:
       - name: Checkout main repo
@@ -79,5 +87,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0
         with:
           commit_message: 'docs(src/assets/): update ${{ matrix.manager }} official documentation'
-          commit_options: '--signoff'
           file_pattern: 'src/assets/${{ matrix.manager }}/*'

@@ -1,8 +1,8 @@
 # Python Dependency Manager Companion MCP Server
 
-> README updated on 2025-07-27 by [@KemingHe](https://github.com/KemingHe)
+> README updated on 2025-08-16 by [@KemingHe](https://github.com/KemingHe)
 
-Stop getting out-of-date Python package manager commands from your AI. Cross-reference latest official `pip`, `poetry`, `uv`, and `conda` docs with auto-updates. [[Watch Demo on YouTube]](https://youtu.be/3nVp46Q8FdY)
+Stop getting out-of-date Python package manager commands from your AI. Cross-reference latest official [`pip`](https://pip.pypa.io/), [`conda`](https://docs.conda.io/projects/conda), [`poetry`](https://python-poetry.org/), [`uv`](https://docs.astral.sh/uv/), [`pixi`](https://pixi.sh/), and [`pdm`](https://pdm-project.org/) docs with auto-updates. [[Watch Demo on YouTube]](https://youtu.be/3nVp46Q8FdY)
 
 ## 🚀 Quick Start for Agentic IDEs
 
@@ -49,7 +49,7 @@ docker pull keminghe/py-dep-man-companion:latest
 
 ## 🗺️ Roadmap
 
-- [ ] Add support for `pipenv`, `pdm`, `pixi`
+- [x] Added support for `pixi` and `pdm` in version 0.1.1
 - [ ] Add comprehensive tests with 100% coverage  
 - [ ] Add indexing support for PDF and CSV files
 
@@ -68,7 +68,9 @@ python-dependency-manager-companion-mcp-server/
 │   │   ├── conda/            # conda docs  
 │   │   ├── pip/              # pip docs
 │   │   ├── poetry/           # poetry docs
-│   │   └── uv/               # uv docs
+│   │   ├── uv/               # uv docs
+│   │   ├── pixi/             # pixi docs
+│   │   └── pdm/              # pdm docs
 │   ├── index/                # Pre-built search index
 │   ├── build_index.py        # Tantivy index builder
 │   └── mcp_server.py         # FastMCP stdio server
