@@ -36,6 +36,7 @@ Write final commit message and return in plaintext code block.
 type(scope): brief description in imperative mood
 
 closes #[issue-number] (if applicable)
+closes #[issue-number] (repeat for each resolved issue)
 
 CHANGES
 - Key change 1
@@ -55,7 +56,7 @@ TECHNICAL NOTES
 
 - **Title**: Max 50 characters, imperative mood ("add", "fix", "update")
 - **Content**: Only include sections with meaningful content, use dash bullets with no redundancy between items
-- **Issue linking**: Only include "closes #X" for actual issue resolution
+- **Issue linking**: Only include "closes #X" for actual issue resolution, use separate "closes" statements for each issue
 
 ## EXAMPLES
 
