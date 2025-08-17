@@ -1,10 +1,10 @@
 [project]
 name = "py_dep_man_companion"
-version = "0.1.0"
+version = "0.1.1"
 description = "Local stdio MCP server providing unified search across Python dependency managers' latest and official documentation."
 readme = "README.md"
 license = {file = "LICENSE"}
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 urls.repository = "https://github.com/KemingHe/python-dependency-manager-companion-mcp-server"
 urls.issues = "https://github.com/KemingHe/python-dependency-manager-companion-mcp-server/issues"
 dependencies = [

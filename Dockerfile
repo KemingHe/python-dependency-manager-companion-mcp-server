@@ -8,7 +8,7 @@
 # ==============================================================================
 # Stage 1: Dependencies builder
 # ==============================================================================
-FROM ghcr.io/astral-sh/uv:python3.12-alpine AS builder
+FROM ghcr.io/astral-sh/uv:python3.13-alpine AS builder
 
 # Set environment variables for uv
 ENV UV_COMPILE_BYTECODE=1 \
@@ -41,7 +41,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 # ==============================================================================
 # Stage 2: Runtime
 # ==============================================================================
-FROM ghcr.io/astral-sh/uv:python3.12-alpine AS runtime
+FROM ghcr.io/astral-sh/uv:python3.13-alpine AS runtime
 
 # Set environment variables for Python and stdio mode
 ENV PYTHONUNBUFFERED=1 \
