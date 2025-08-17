@@ -42,7 +42,7 @@ def create_schema() -> tantivy.Schema:
     Fields:
     - content: Full-text searchable markdown content
     - path: File path for result retrieval
-    - package: Source package manager (pip, conda, poetry, uv) for filtering
+    - package: Source package manager (pip, conda, poetry, uv, pixi, pdm) for filtering
     - title: Document title extracted from file path
     - source_repo: Original repository from metadata
     - docs_path: Documentation directory path from metadata (for GitHub links)
@@ -163,7 +163,7 @@ def build_index():
     # Create schema and index
     schema = create_schema()
     index = tantivy.Index(schema, path=str(INDEX_DIR))
-    writer = index.writer(heap_size=50_000_000)  # 50MB heap for better performance
+    writer = index.writer(heap_size=100_000_000)  # 100MB heap for better performance
 
     # Find all documentation files
     markdown_files = find_markdown_files(ASSETS_DIR)

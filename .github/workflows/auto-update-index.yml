@@ -40,5 +40,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0
         with:
           commit_message: 'chore(src/index/): rebuild search index from updated documentation'
-          commit_options: '--signoff'
           file_pattern: 'src/index/*'

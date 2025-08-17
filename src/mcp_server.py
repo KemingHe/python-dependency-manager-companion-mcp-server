@@ -2,9 +2,9 @@
 """
 FastMCP server for Python dependency manager documentation search.
 
-Provides fuzzy search capabilities across pip, conda, poetry, and uv documentation
-using a pre-built Tantivy index. Supports package filtering and handles typos
-through fuzzy matching.
+Provides fuzzy search capabilities across pip, conda, poetry, uv, pixi, 
+and pdm documentation using a pre-built Tantivy index. Supports package filtering 
+and handles typos through fuzzy matching.
 """
 
 import logging
@@ -109,7 +109,7 @@ def search_py_dep_man_docs(
         ),
     ],
     package_filter: Annotated[
-        Literal["pip", "conda", "poetry", "uv"] | None,
+        Literal["pip", "conda", "poetry", "uv", "pixi", "pdm"] | None,
         Field(
             description="Focus on specific tool when comparing or learning tool-specific workflows"
         ),
@@ -257,7 +257,7 @@ def main():
     try:
         logger.info("Starting Python Dependency Manager Documentation MCP Server...")
         logger.info(
-            "Server provides fuzzy search across pip, conda, poetry, and uv documentation"
+            "Server provides fuzzy search across pip, conda, poetry, uv, pixi, and pdm documentation"
         )
 
         # Initialize index on startup to catch errors early
