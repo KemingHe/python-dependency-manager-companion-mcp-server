@@ -539,6 +539,10 @@ uv add [OPTIONS] <PACKAGES|--requirements <REQUIREMENTS>>
 <p>May also be set with the <code>UV_NO_CACHE</code> environment variable.</p></dd><dt id="uv-add--no-config"><a href="#uv-add--no-config"><code>--no-config</code></a></dt><dd><p>Avoid discovering configuration files (<code>pyproject.toml</code>, <code>uv.toml</code>).</p>
 <p>Normally, configuration files are discovered in the current directory, parent directories, or user configuration directories.</p>
 <p>May also be set with the <code>UV_NO_CONFIG</code> environment variable.</p></dd><dt id="uv-add--no-index"><a href="#uv-add--no-index"><code>--no-index</code></a></dt><dd><p>Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via <code>--find-links</code></p>
+</dd><dt id="uv-add--no-install-project"><a href="#uv-add--no-install-project"><code>--no-install-project</code></a></dt><dd><p>Do not install the current project.</p>
+<p>By default, the current project is installed into the environment with all of its dependencies. The <code>--no-install-project</code> option allows the project to be excluded, but all of its dependencies are still installed. This is particularly useful in situations like building Docker images where installing the project separately from its dependencies allows optimal layer caching.</p>
+</dd><dt id="uv-add--no-install-workspace"><a href="#uv-add--no-install-workspace"><code>--no-install-workspace</code></a></dt><dd><p>Do not install any workspace members, including the current project.</p>
+<p>By default, all of the workspace members and their dependencies are installed into the environment. The <code>--no-install-workspace</code> option allows exclusion of all the workspace members while retaining their dependencies. This is particularly useful in situations like building Docker images where installing the workspace separately from its dependencies allows optimal layer caching.</p>
 </dd><dt id="uv-add--no-managed-python"><a href="#uv-add--no-managed-python"><code>--no-managed-python</code></a></dt><dd><p>Disable use of uv-managed Python versions.</p>
 <p>Instead, uv will search for a suitable Python version on the system.</p>
 <p>May also be set with the <code>UV_NO_MANAGED_PYTHON</code> environment variable.</p></dd><dt id="uv-add--no-progress"><a href="#uv-add--no-progress"><code>--no-progress</code></a></dt><dd><p>Hide all progress outputs.</p>
@@ -1181,6 +1185,7 @@ environment in the project.</p>
 <li><code>linux</code>:  An alias for <code>x86_64-unknown-linux-gnu</code>, the default target for Linux</li>
 <li><code>macos</code>:  An alias for <code>aarch64-apple-darwin</code>, the default target for macOS</li>
 <li><code>x86_64-pc-windows-msvc</code>:  A 64-bit x86 Windows target</li>
+<li><code>aarch64-pc-windows-msvc</code>:  An ARM64 Windows target</li>
 <li><code>i686-pc-windows-msvc</code>:  A 32-bit x86 Windows target</li>
 <li><code>x86_64-unknown-linux-gnu</code>:  An x86 Linux target. Equivalent to <code>x86_64-manylinux_2_28</code></li>
 <li><code>aarch64-apple-darwin</code>:  An ARM-based macOS target, as seen on Apple Silicon devices</li>
@@ -1778,6 +1783,7 @@ interpreter. Use <code>--universal</code> to display the tree for all platforms,
 <li><code>linux</code>:  An alias for <code>x86_64-unknown-linux-gnu</code>, the default target for Linux</li>
 <li><code>macos</code>:  An alias for <code>aarch64-apple-darwin</code>, the default target for macOS</li>
 <li><code>x86_64-pc-windows-msvc</code>:  A 64-bit x86 Windows target</li>
+<li><code>aarch64-pc-windows-msvc</code>:  An ARM64 Windows target</li>
 <li><code>i686-pc-windows-msvc</code>:  A 32-bit x86 Windows target</li>
 <li><code>x86_64-unknown-linux-gnu</code>:  An x86 Linux target. Equivalent to <code>x86_64-manylinux_2_28</code></li>
 <li><code>aarch64-apple-darwin</code>:  An ARM-based macOS target, as seen on Apple Silicon devices</li>
@@ -3557,6 +3563,7 @@ by <code>--python-version</code>.</p>
 <li><code>linux</code>:  An alias for <code>x86_64-unknown-linux-gnu</code>, the default target for Linux</li>
 <li><code>macos</code>:  An alias for <code>aarch64-apple-darwin</code>, the default target for macOS</li>
 <li><code>x86_64-pc-windows-msvc</code>:  A 64-bit x86 Windows target</li>
+<li><code>aarch64-pc-windows-msvc</code>:  An ARM64 Windows target</li>
 <li><code>i686-pc-windows-msvc</code>:  A 32-bit x86 Windows target</li>
 <li><code>x86_64-unknown-linux-gnu</code>:  An x86 Linux target. Equivalent to <code>x86_64-manylinux_2_28</code></li>
 <li><code>aarch64-apple-darwin</code>:  An ARM-based macOS target, as seen on Apple Silicon devices</li>
@@ -3826,6 +3833,7 @@ be used with caution, as it can modify the system Python installation.</p>
 <li><code>linux</code>:  An alias for <code>x86_64-unknown-linux-gnu</code>, the default target for Linux</li>
 <li><code>macos</code>:  An alias for <code>aarch64-apple-darwin</code>, the default target for macOS</li>
 <li><code>x86_64-pc-windows-msvc</code>:  A 64-bit x86 Windows target</li>
+<li><code>aarch64-pc-windows-msvc</code>:  An ARM64 Windows target</li>
 <li><code>i686-pc-windows-msvc</code>:  A 32-bit x86 Windows target</li>
 <li><code>x86_64-unknown-linux-gnu</code>:  An x86 Linux target. Equivalent to <code>x86_64-manylinux_2_28</code></li>
 <li><code>aarch64-apple-darwin</code>:  An ARM-based macOS target, as seen on Apple Silicon devices</li>
@@ -4113,6 +4121,7 @@ should be used with caution, as it can modify the system Python installation.</p
 <li><code>linux</code>:  An alias for <code>x86_64-unknown-linux-gnu</code>, the default target for Linux</li>
 <li><code>macos</code>:  An alias for <code>aarch64-apple-darwin</code>, the default target for macOS</li>
 <li><code>x86_64-pc-windows-msvc</code>:  A 64-bit x86 Windows target</li>
+<li><code>aarch64-pc-windows-msvc</code>:  An ARM64 Windows target</li>
 <li><code>i686-pc-windows-msvc</code>:  A 32-bit x86 Windows target</li>
 <li><code>x86_64-unknown-linux-gnu</code>:  An x86 Linux target. Equivalent to <code>x86_64-manylinux_2_28</code></li>
 <li><code>aarch64-apple-darwin</code>:  An ARM-based macOS target, as seen on Apple Silicon devices</li>
