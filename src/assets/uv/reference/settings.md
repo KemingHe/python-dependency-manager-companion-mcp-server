@@ -1047,7 +1047,7 @@ standard, though only the following fields are respected:
   to all versions of the package.
 - (Optional) `requires-dist`: The dependencies of the package (e.g., `werkzeug>=0.14`).
 - (Optional) `requires-python`: The Python version required by the package (e.g., `>=3.10`).
-- (Optional) `provides-extras`: The extras provided by the package.
+- (Optional) `provides-extra`: The extras provided by the package.
 
 **Default value**: `[]`
 
@@ -2095,11 +2095,12 @@ By default, uv will use the latest compatible version of each package (`highest`
 
 ### [`trusted-publishing`](#trusted-publishing) {: #trusted-publishing }
 
-Configure trusted publishing via GitHub Actions.
+Configure trusted publishing.
 
-By default, uv checks for trusted publishing when running in GitHub Actions, but ignores it
-if it isn't configured or the workflow doesn't have enough permissions (e.g., a pull request
-from a fork).
+By default, uv checks for trusted publishing when running in a supported environment, but
+ignores it if it isn't configured.
+
+uv's supported environments for trusted publishing include GitHub Actions and GitLab CI/CD.
 
 **Default value**: `automatic`
 
@@ -2427,7 +2428,7 @@ standard, though only the following fields are respected:
   to all versions of the package.
 - (Optional) `requires-dist`: The dependencies of the package (e.g., `werkzeug>=0.14`).
 - (Optional) `requires-python`: The Python version required by the package (e.g., `>=3.10`).
-- (Optional) `provides-extras`: The extras provided by the package.
+- (Optional) `provides-extra`: The extras provided by the package.
 
 **Default value**: `[]`
 
