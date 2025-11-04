@@ -1067,17 +1067,44 @@ The build system is a table that can contain the following fields:
 
 - `source`: specifies the location of the source code for the package. Default: manifest directory. Currently supported options:
   - `path`: a string representing a relative or absolute path to the source code.
+  - `git`: a string representing URL to the source repository.
+  - `rev`: a string representing SHA revision to checkout.
+  - `subdirectory`: a string representing path to subdirectory to use.
 - `channels`: specifies the channels to get the build backend from.
 - `backend`: specifies the build backend to use. This is a table that can contain the following fields:
   - `name`: the name of the build backend to use. This will also be the executable name.
   - `version`: the version of the build backend to use.
-- `configuration`: a table that contains the configuration options for the build backend.
+- `config`: a table that contains the configuration options for the build backend.
 - `target`: a table that can contain target specific build configuration.
+  - Each target can have its own `config` table to override or extend the base configuration for specific platforms.
 
 More documentation on the backends can be found in the [build backend documentation](../build/backends.md).
 
+#### Basic build configuration example
+
 ```toml
 --8<-- "docs/source_files/pixi_tomls/pixi-package-manifest.toml:build-system"
+```
+
+#### Target-specific build configuration example
+
+For platform-specific build configuration, use the `[package.build.target.<platform>]` table:
+
+```toml
+[package.build]
+backend = { name = "pixi-build-cmake", version = "0.3.*" }
+
+[package.build.config]
+# Base configuration applied to all platforms
+extra-args = ["-DCMAKE_BUILD_TYPE=Release"]
+
+[package.build.target.linux-64.config]
+# Linux-specific configuration
+extra-args = ["-DCMAKE_BUILD_TYPE=Debug", "-DLINUX_FLAG=ON"]
+
+[package.build.target.win-64.config]
+# Windows-specific configuration
+extra-args = ["-DCMAKE_BUILD_TYPE=Debug", "-DWIN_FLAG=ON"]
 ```
 
 
