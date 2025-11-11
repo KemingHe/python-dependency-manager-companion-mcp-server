@@ -485,7 +485,7 @@ uv run [OPTIONS] [COMMAND]
 <p>Normally, configuration files are discovered in the current directory, parent directories, or user configuration directories.</p>
 <p>May also be set with the <code>UV_NO_CONFIG</code> environment variable.</p></dd><dt id="uv-run--no-default-groups"><a href="#uv-run--no-default-groups"><code>--no-default-groups</code></a></dt><dd><p>Ignore the default dependency groups.</p>
 <p>uv includes the groups defined in <code>tool.uv.default-groups</code> by default. This disables that option, however, specific groups can still be included with <code>--group</code>.</p>
-</dd><dt id="uv-run--no-dev"><a href="#uv-run--no-dev"><code>--no-dev</code></a></dt><dd><p>Disable the development dependency group.</p>
+<p>May also be set with the <code>UV_NO_DEFAULT_GROUPS</code> environment variable.</p></dd><dt id="uv-run--no-dev"><a href="#uv-run--no-dev"><code>--no-dev</code></a></dt><dd><p>Disable the development dependency group.</p>
 <p>This option is an alias of <code>--no-group dev</code>. See <code>--no-default-groups</code> to disable all default groups instead.</p>
 <p>This option is only available when running in a project.</p>
 <p>May also be set with the <code>UV_NO_DEV</code> environment variable.</p></dd><dt id="uv-run--no-editable"><a href="#uv-run--no-editable"><code>--no-editable</code></a></dt><dd><p>Install any editable dependencies, including the project and any workspace members, as non-editable</p>
@@ -1168,7 +1168,7 @@ uv version [OPTIONS] [VALUE]
 <p>Can be provided multiple times.</p>
 <p>Expects to receive either a hostname (e.g., <code>localhost</code>), a host-port pair (e.g., <code>localhost:8080</code>), or a URL (e.g., <code>https://localhost</code>).</p>
 <p>WARNING: Hosts included in this list will not be verified against the system's certificate store. Only use <code>--allow-insecure-host</code> in a secure network with verified sources, as it bypasses SSL verification and could expose you to MITM attacks.</p>
-<p>May also be set with the <code>UV_INSECURE_HOST</code> environment variable.</p></dd><dt id="uv-version--bump"><a href="#uv-version--bump"><code>--bump</code></a> <i>bump</i></dt><dd><p>Update the project version using the given semantics</p>
+<p>May also be set with the <code>UV_INSECURE_HOST</code> environment variable.</p></dd><dt id="uv-version--bump"><a href="#uv-version--bump"><code>--bump</code></a> <i>bump[=value]</i></dt><dd><p>Update the project version using the given semantics</p>
 <p>This flag can be passed multiple times.</p>
 <p>Possible values:</p>
 <ul>
@@ -1477,7 +1477,7 @@ uv sync [OPTIONS]
 <p>Normally, configuration files are discovered in the current directory, parent directories, or user configuration directories.</p>
 <p>May also be set with the <code>UV_NO_CONFIG</code> environment variable.</p></dd><dt id="uv-sync--no-default-groups"><a href="#uv-sync--no-default-groups"><code>--no-default-groups</code></a></dt><dd><p>Ignore the default dependency groups.</p>
 <p>uv includes the groups defined in <code>tool.uv.default-groups</code> by default. This disables that option, however, specific groups can still be included with <code>--group</code>.</p>
-</dd><dt id="uv-sync--no-dev"><a href="#uv-sync--no-dev"><code>--no-dev</code></a></dt><dd><p>Disable the development dependency group.</p>
+<p>May also be set with the <code>UV_NO_DEFAULT_GROUPS</code> environment variable.</p></dd><dt id="uv-sync--no-dev"><a href="#uv-sync--no-dev"><code>--no-dev</code></a></dt><dd><p>Disable the development dependency group.</p>
 <p>This option is an alias of <code>--no-group dev</code>. See <code>--no-default-groups</code> to disable all default groups instead.</p>
 <p>May also be set with the <code>UV_NO_DEV</code> environment variable.</p></dd><dt id="uv-sync--no-editable"><a href="#uv-sync--no-editable"><code>--no-editable</code></a></dt><dd><p>Install any editable dependencies, including the project and any workspace members, as non-editable</p>
 <p>May also be set with the <code>UV_NO_EDITABLE</code> environment variable.</p></dd><dt id="uv-sync--no-extra"><a href="#uv-sync--no-extra"><code>--no-extra</code></a> <i>no-extra</i></dt><dd><p>Exclude the specified optional dependencies, if <code>--all-extras</code> is supplied.</p>
@@ -1784,7 +1784,7 @@ The project is re-locked before exporting unless the `--locked` or `--frozen` fl
 
 uv will search for a project in the current directory or any parent directory. If a project cannot be found, uv will exit with an error.
 
-If operating in a workspace, the root will be exported by default; however, a specific member can be selected using the `--package` option.
+If operating in a workspace, the root will be exported by default; however, specific members can be selected using the `--package` option.
 
 <h3 class="cli-reference">Usage</h3>
 
@@ -1910,7 +1910,7 @@ uv export [OPTIONS]
 <p>Normally, configuration files are discovered in the current directory, parent directories, or user configuration directories.</p>
 <p>May also be set with the <code>UV_NO_CONFIG</code> environment variable.</p></dd><dt id="uv-export--no-default-groups"><a href="#uv-export--no-default-groups"><code>--no-default-groups</code></a></dt><dd><p>Ignore the default dependency groups.</p>
 <p>uv includes the groups defined in <code>tool.uv.default-groups</code> by default. This disables that option, however, specific groups can still be included with <code>--group</code>.</p>
-</dd><dt id="uv-export--no-dev"><a href="#uv-export--no-dev"><code>--no-dev</code></a></dt><dd><p>Disable the development dependency group.</p>
+<p>May also be set with the <code>UV_NO_DEFAULT_GROUPS</code> environment variable.</p></dd><dt id="uv-export--no-dev"><a href="#uv-export--no-dev"><code>--no-dev</code></a></dt><dd><p>Disable the development dependency group.</p>
 <p>This option is an alias of <code>--no-group dev</code>. See <code>--no-default-groups</code> to disable all default groups instead.</p>
 <p>May also be set with the <code>UV_NO_DEV</code> environment variable.</p></dd><dt id="uv-export--no-editable"><a href="#uv-export--no-editable"><code>--no-editable</code></a></dt><dd><p>Export any editable dependencies, including the project and any workspace members, as non-editable</p>
 <p>May also be set with the <code>UV_NO_EDITABLE</code> environment variable.</p></dd><dt id="uv-export--no-emit-local"><a href="#uv-export--no-emit-local"><code>--no-emit-local</code></a>, <code>--no-install-local</code></dt><dd><p>Do not include local path dependencies in the exported requirements.</p>
@@ -1944,8 +1944,8 @@ uv export [OPTIONS]
 <p>The project and its dependencies will be omitted.</p>
 <p>May be provided multiple times. Implies <code>--no-default-groups</code>.</p>
 </dd><dt id="uv-export--output-file"><a href="#uv-export--output-file"><code>--output-file</code></a>, <code>-o</code> <i>output-file</i></dt><dd><p>Write the exported requirements to the given file</p>
-</dd><dt id="uv-export--package"><a href="#uv-export--package"><code>--package</code></a> <i>package</i></dt><dd><p>Export the dependencies for a specific package in the workspace.</p>
-<p>If the workspace member does not exist, uv will exit with an error.</p>
+</dd><dt id="uv-export--package"><a href="#uv-export--package"><code>--package</code></a> <i>package</i></dt><dd><p>Export the dependencies for specific packages in the workspace.</p>
+<p>If any workspace member does not exist, uv will exit with an error.</p>
 </dd><dt id="uv-export--prerelease"><a href="#uv-export--prerelease"><code>--prerelease</code></a> <i>prerelease</i></dt><dd><p>The strategy to use when considering pre-release versions.</p>
 <p>By default, uv will accept pre-releases for packages that <em>only</em> publish pre-releases, along with first-party requirements that contain an explicit pre-release marker in the declared specifiers (<code>if-necessary-or-explicit</code>).</p>
 <p>May also be set with the <code>UV_PRERELEASE</code> environment variable.</p><p>Possible values:</p>
@@ -2104,7 +2104,7 @@ uv tree [OPTIONS]
 <p>May also be set with the <code>UV_NO_CONFIG</code> environment variable.</p></dd><dt id="uv-tree--no-dedupe"><a href="#uv-tree--no-dedupe"><code>--no-dedupe</code></a></dt><dd><p>Do not de-duplicate repeated dependencies. Usually, when a package has already displayed its dependencies, further occurrences will not re-display its dependencies, and will include a (*) to indicate it has already been shown. This flag will cause those duplicates to be repeated</p>
 </dd><dt id="uv-tree--no-default-groups"><a href="#uv-tree--no-default-groups"><code>--no-default-groups</code></a></dt><dd><p>Ignore the default dependency groups.</p>
 <p>uv includes the groups defined in <code>tool.uv.default-groups</code> by default. This disables that option, however, specific groups can still be included with <code>--group</code>.</p>
-</dd><dt id="uv-tree--no-dev"><a href="#uv-tree--no-dev"><code>--no-dev</code></a></dt><dd><p>Disable the development dependency group.</p>
+<p>May also be set with the <code>UV_NO_DEFAULT_GROUPS</code> environment variable.</p></dd><dt id="uv-tree--no-dev"><a href="#uv-tree--no-dev"><code>--no-dev</code></a></dt><dd><p>Disable the development dependency group.</p>
 <p>This option is an alias of <code>--no-group dev</code>. See <code>--no-default-groups</code> to disable all default groups instead.</p>
 <p>May also be set with the <code>UV_NO_DEV</code> environment variable.</p></dd><dt id="uv-tree--no-group"><a href="#uv-tree--no-group"><code>--no-group</code></a> <i>no-group</i></dt><dd><p>Disable the specified dependency group.</p>
 <p>This option always takes precedence over default groups, <code>--all-groups</code>, and <code>--group</code>.</p>
@@ -3049,7 +3049,7 @@ uv tool list [OPTIONS]
 <p>Repeating this option, e.g., <code>-qq</code>, will enable a silent mode in which uv will write no output to stdout.</p>
 </dd><dt id="uv-tool-list--show-extras"><a href="#uv-tool-list--show-extras"><code>--show-extras</code></a></dt><dd><p>Whether to display the extra requirements installed with each tool</p>
 </dd><dt id="uv-tool-list--show-paths"><a href="#uv-tool-list--show-paths"><code>--show-paths</code></a></dt><dd><p>Whether to display the path to each tool environment and installed executable</p>
-</dd><dt id="uv-tool-list--show-python"><a href="#uv-tool-list--show-python"><code>--show-python</code></a></dt><dd><p>Whether to display the Python version associated with run each tool</p>
+</dd><dt id="uv-tool-list--show-python"><a href="#uv-tool-list--show-python"><code>--show-python</code></a></dt><dd><p>Whether to display the Python version associated with each tool</p>
 </dd><dt id="uv-tool-list--show-version-specifiers"><a href="#uv-tool-list--show-version-specifiers"><code>--show-version-specifiers</code></a></dt><dd><p>Whether to display the version specifier(s) used to install each tool</p>
 </dd><dt id="uv-tool-list--show-with"><a href="#uv-tool-list--show-with"><code>--show-with</code></a></dt><dd><p>Whether to display the additional requirements installed with each tool</p>
 </dd><dt id="uv-tool-list--verbose"><a href="#uv-tool-list--verbose"><code>--verbose</code></a>, <code>-v</code></dt><dd><p>Use verbose output.</p>
