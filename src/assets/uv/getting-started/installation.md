@@ -25,7 +25,7 @@ uv provides a standalone installer to download and install uv:
     Request a specific version by including it in the URL:
 
     ```console
-    $ curl -LsSf https://astral.sh/uv/0.9.10/install.sh | sh
+    $ curl -LsSf https://astral.sh/uv/0.9.12/install.sh | sh
     ```
 
 === "Windows"
@@ -41,7 +41,7 @@ uv provides a standalone installer to download and install uv:
     Request a specific version by including it in the URL:
 
     ```pwsh-session
-    PS> powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/0.9.10/install.ps1 | iex"
+    PS> powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/0.9.12/install.ps1 | iex"
     ```
 
 !!! tip
@@ -137,11 +137,10 @@ the standalone installer via `github.com` instead of `astral.sh`.
 
 ### Cargo
 
-uv is available via Cargo, but must be built from Git rather than [crates.io](https://crates.io) due
-to its dependency on unpublished crates.
+uv is available via [crates.io](https://crates.io).
 
 ```console
-$ cargo install --git https://github.com/astral-sh/uv uv
+$ cargo install --locked uv
 ```
 
 !!! note

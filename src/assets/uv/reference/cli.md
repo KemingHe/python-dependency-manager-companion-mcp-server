@@ -1855,12 +1855,13 @@ uv export [OPTIONS]
 <li><code>fewest</code>:  Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms</li>
 <li><code>requires-python</code>:  Optimize for selecting latest supported version of each package, for each supported Python version</li>
 </ul></dd><dt id="uv-export--format"><a href="#uv-export--format"><code>--format</code></a> <i>format</i></dt><dd><p>The format to which <code>uv.lock</code> should be exported.</p>
-<p>Supports both <code>requirements.txt</code> and <code>pylock.toml</code> (PEP 751) output formats.</p>
+<p>Supports <code>requirements.txt</code>, <code>pylock.toml</code> (PEP 751) and CycloneDX v1.5 JSON output formats.</p>
 <p>uv will infer the output format from the file extension of the output file, if provided. Otherwise, defaults to <code>requirements.txt</code>.</p>
 <p>Possible values:</p>
 <ul>
 <li><code>requirements.txt</code>:  Export in <code>requirements.txt</code> format</li>
 <li><code>pylock.toml</code>:  Export in <code>pylock.toml</code> format</li>
+<li><code>cyclonedx1.5</code>:  Export in <code>CycloneDX</code> v1.5 JSON format</li>
 </ul></dd><dt id="uv-export--frozen"><a href="#uv-export--frozen"><code>--frozen</code></a></dt><dd><p>Do not update the <code>uv.lock</code> before exporting.</p>
 <p>If a <code>uv.lock</code> does not exist, uv will exit with an error.</p>
 <p>May also be set with the <code>UV_FROZEN</code> environment variable.</p></dd><dt id="uv-export--group"><a href="#uv-export--group"><code>--group</code></a> <i>group</i></dt><dd><p>Include dependencies from the specified dependency group.</p>
@@ -5832,7 +5833,7 @@ uv publish [OPTIONS] [FILES]...
 <h3 class="cli-reference">Arguments</h3>
 
 <dl class="cli-reference"><dt id="uv-publish--files"><a href="#uv-publish--files"<code>FILES</code></a></dt><dd><p>Paths to the files to upload. Accepts glob expressions.</p>
-<p>Defaults to the <code>dist</code> directory. Selects only wheels and source distributions, while ignoring other files.</p>
+<p>Defaults to the <code>dist</code> directory. Selects only wheels and source distributions and their attestations, while ignoring other files.</p>
 </dd></dl>
 
 <h3 class="cli-reference">Options</h3>
@@ -5888,7 +5889,9 @@ uv publish --publish-url https://upload.pypi.org/legacy/ --check-url https://pyp
 <p>May also be set with the <code>UV_MANAGED_PYTHON</code> environment variable.</p></dd><dt id="uv-publish--native-tls"><a href="#uv-publish--native-tls"><code>--native-tls</code></a></dt><dd><p>Whether to load TLS certificates from the platform's native certificate store.</p>
 <p>By default, uv loads certificates from the bundled <code>webpki-roots</code> crate. The <code>webpki-roots</code> are a reliable set of trust roots from Mozilla, and including them in uv improves portability and performance (especially on macOS).</p>
 <p>However, in some cases, you may want to use the platform's native certificate store, especially if you're relying on a corporate trust root (e.g., for a mandatory proxy) that's included in your system's certificate store.</p>
-<p>May also be set with the <code>UV_NATIVE_TLS</code> environment variable.</p></dd><dt id="uv-publish--no-cache"><a href="#uv-publish--no-cache"><code>--no-cache</code></a>, <code>--no-cache-dir</code>, <code>-n</code></dt><dd><p>Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation</p>
+<p>May also be set with the <code>UV_NATIVE_TLS</code> environment variable.</p></dd><dt id="uv-publish--no-attestations"><a href="#uv-publish--no-attestations"><code>--no-attestations</code></a></dt><dd><p>Do not upload attestations for the published files.</p>
+<p>By default, uv attempts to upload matching PEP 740 attestations with each distribution that is published.</p>
+<p>May also be set with the <code>UV_PUBLISH_NO_ATTESTATIONS</code> environment variable.</p></dd><dt id="uv-publish--no-cache"><a href="#uv-publish--no-cache"><code>--no-cache</code></a>, <code>--no-cache-dir</code>, <code>-n</code></dt><dd><p>Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation</p>
 <p>May also be set with the <code>UV_NO_CACHE</code> environment variable.</p></dd><dt id="uv-publish--no-config"><a href="#uv-publish--no-config"><code>--no-config</code></a></dt><dd><p>Avoid discovering configuration files (<code>pyproject.toml</code>, <code>uv.toml</code>).</p>
 <p>Normally, configuration files are discovered in the current directory, parent directories, or user configuration directories.</p>
 <p>May also be set with the <code>UV_NO_CONFIG</code> environment variable.</p></dd><dt id="uv-publish--no-managed-python"><a href="#uv-publish--no-managed-python"><code>--no-managed-python</code></a></dt><dd><p>Disable use of uv-managed Python versions.</p>
