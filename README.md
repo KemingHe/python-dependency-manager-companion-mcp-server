@@ -1,6 +1,12 @@
-# Python Dependency Manager Companion MCP Server
+# ⚠️ [Archived] ⚠️ Python Dependency Manager Companion MCP Server
 
-> README updated on 2025-08-16 by [@KemingHe](https://github.com/KemingHe)
+> [!WARNING]
+>
+> **This repository is archived and no longer maintained.**
+>
+> - **Archived**: 2026-02-15 by [@KemingHe](https://github.com/KemingHe)
+> - **Archive Reason**: Use case too niche + better alternatives i.e. [Context7](https://context7.com/) available
+> - **Inquries and Corrections**: Email keminghe[dot]career[at]gmail[dot]com
 
 Stop getting out-of-date Python package manager commands from your AI. Cross-reference latest official [`pip`](https://pip.pypa.io/), [`conda`](https://docs.conda.io/projects/conda), [`poetry`](https://python-poetry.org/), [`uv`](https://docs.astral.sh/uv/), [`pixi`](https://pixi.sh/), and [`pdm`](https://pdm-project.org/) docs with auto-updates. [[Watch Demo on YouTube]](https://youtu.be/3nVp46Q8FdY)
 
